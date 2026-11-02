@@ -1,13 +1,13 @@
 @font-face {
   font-family: "Martian Mono";
-  src: url("assets/fonts/MartianMono.ttf") format("truetype");
+  src: url("assets/fonts/MartianMono.woff2") format("woff2");
   font-weight: 100 800;
   font-stretch: 75% 112.5%;
   font-display: swap;
 }
 @font-face {
   font-family: "Martian Grotesk xWd";
-  src: url("assets/fonts/MartianGrotesk-xWdUlt.otf") format("opentype");
+  src: url("assets/fonts/MartianGrotesk-xWdUlt.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -48,7 +48,7 @@ a { color: inherit; text-decoration: none; }
   position: sticky; top: 0; z-index: 10;
   height: 176rem; margin-bottom: -176rem;
   border-radius: 50rem 50rem 0 0;
-  background: url("assets/img/nav.png") 0 0 / 100% 100%;
+  background: url("assets/img/nav.webp") 0 0 / 100% 100%;
 }
 .nav::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
@@ -73,8 +73,8 @@ a { color: inherit; text-decoration: none; }
   position: sticky; top: 0;
   height: 712rem;
   background:
-    url("assets/img/hero.png") 0 0 / 100% 100% no-repeat,
-    url("assets/img/hero-under.png") 0 0 / 100% 517rem no-repeat,
+    url("assets/img/hero.webp") 0 0 / 100% 100% no-repeat,
+    url("assets/img/hero-under.webp") 0 0 / 100% 517rem no-repeat,
     linear-gradient(51.44deg, #fff 17.731%, #ffb7ab 81.335%);
   border-radius: 50rem;
 }

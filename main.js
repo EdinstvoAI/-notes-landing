@@ -113,7 +113,7 @@ function measurePath() {
   const w = hero.clientWidth / r;
   const h = hero.clientHeight / r;
   // desktop rectangle comes from the Figma frame, mobile one hugs the card
-  const [x, y, x2, y2, rad] = isMobile() ? [14, 86, w - 14, h - 24, 34] : [55, 176, 1865, 306, 62];
+  const [x, y, x2, y2, rad] = isMobile() ? [14, 104, w - 14, h - 24, 34] : [55, 176, 1865, 306, 62];
   svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
   loop.setAttribute('d',
     `M${x + rad} ${y} H${x2 - rad} A${rad} ${rad} 0 0 1 ${x2} ${y + rad} V${y2 - rad} ` +

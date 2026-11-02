@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>&lt;notes&gt; — приложение для заметок</title>
+  <title>&lt;notes&gt; — заметки в Markdown, диктовка голосом и задачи</title>
   <meta name="description" content="Приложение для заметок, которое не мешает думать: markdown-файлы в вашей папке, диктовка голосом, задачи в календаре, умный поиск.">
   <link rel="canonical" href="https://notes.makark.ru/">
   <link rel="alternate" hreflang="ru" href="https://notes.makark.ru/?lang=ru">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="<notes>">
   <meta property="og:url" content="https://notes.makark.ru/">
-  <meta property="og:title" content="<notes> — приложение для заметок">
+  <meta property="og:title" content="<notes> — заметки в Markdown, диктовка голосом и задачи">
   <meta property="og:description" content="Приложение для заметок, которое не мешает думать: markdown, голос, задачи.">
   <meta property="og:image" content="https://notes.makark.ru/assets/img/og.png">
   <meta property="og:image:width" content="1200">
@@ -23,6 +23,7 @@
   <meta property="og:locale" content="ru_RU">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:locale:alternate" content="sr_RS">
+  <meta property="og:image:alt" content="<notes> — место для мыслей">
   <meta name="twitter:card" content="summary_large_image">
 
   <script type="application/ld+json">
@@ -45,7 +46,9 @@
     ]
   }
   </script>
-  <link rel="preload" href="assets/fonts/MartianMono.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/fonts/MartianMono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/MartianGrotesk-xWdUlt.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/hero.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -89,12 +92,12 @@
             <div class="app js-app">
               <h2 class="app__title">приложение для заметок, которое не мешает думать</h2>
               <div class="carousel js-carousel">
-                <article class="card"><img src="assets/img/card-1.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>markdown‑файлы в вашей папке</h3><p>каждая заметка — обычный .md файл, выберите любую папку и приложение начнёт работать</p></div></article>
-                <article class="card"><img src="assets/img/card-2.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>задачи в календаре</h3><p>добавьте дату к задаче в заметке, она появится в apple calendar, никаких отдельных приложений для планирования</p></div></article>
-                <article class="card" id="search"><img src="assets/img/card-3.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>умный поиск</h3><p>найдите заметку даже если не помните точные слова, семантический поиск понимает контекст</p></div></article>
-                <article class="card" id="voice"><img src="assets/img/card-4.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>диктовка</h3><p>нажмите хоткей в любом приложении и речь превратится в текст, расшифровка с таймкодами и именами спикеров, работает локально</p></div></article>
-                <article class="card"><img src="assets/img/card-5.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>шаблоны</h3><p>создавайте шаблоны заметок для ускорения работы с заметками</p></div></article>
-                <article class="card"><img src="assets/img/card-6.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>github</h3><p>папка хранит всю историю изменений, верните любую правку, github подключается по желанию</p></div></article>
+                <article class="card"><img src="assets/img/card-1.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>markdown‑файлы в вашей папке</h3><p>каждая заметка — обычный .md файл, выберите любую папку и приложение начнёт работать</p></div></article>
+                <article class="card"><img src="assets/img/card-2.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>задачи в календаре</h3><p>добавьте дату к задаче в заметке, она появится в apple calendar, никаких отдельных приложений для планирования</p></div></article>
+                <article class="card" id="search"><img src="assets/img/card-3.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>умный поиск</h3><p>найдите заметку даже если не помните точные слова, семантический поиск понимает контекст</p></div></article>
+                <article class="card" id="voice"><img src="assets/img/card-4.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>диктовка</h3><p>нажмите хоткей в любом приложении и речь превратится в текст, расшифровка с таймкодами и именами спикеров, работает локально</p></div></article>
+                <article class="card"><img src="assets/img/card-5.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>шаблоны</h3><p>создавайте шаблоны заметок для ускорения работы с заметками</p></div></article>
+                <article class="card"><img src="assets/img/card-6.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>github</h3><p>папка хранит всю историю изменений, верните любую правку, github подключается по желанию</p></div></article>
               </div>
             </div>
           </div>
