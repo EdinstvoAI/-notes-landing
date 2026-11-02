@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>&lt;notes&gt; — приложение для заметок</title>
+  <meta name="description" content="Приложение для заметок, которое не мешает думать: markdown, голос, задачи.">
+  <link rel="preload" href="assets/fonts/MartianMono.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>✦быстрые заметки ✦ папки ✦ поиск ✦ синхронизация файлов ✦ тёмная тема ✦</span>
+      <span>✦быстрые заметки ✦ папки ✦ поиск ✦ синхронизация файлов ✦ тёмная тема ✦</span>
+    </div>
+  </div>
+
+  <main class="page">
+    <header class="nav">
+      <i class="nav__corner nav__corner--l"></i><i class="nav__corner nav__corner--r"></i>
+      <a class="nav__logo" href="#">&lt;notes&gt;</a>
+      <nav class="nav__links">
+        <a href="#notes">Заметки</a>
+        <a href="#search">Поиск</a>
+        <a href="#voice">Голос</a>
+        <a href="#security">Безопасность</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/">Github</a>
+      </nav>
+    </header>
+
+    <div class="top">
+      <section class="hero">
+        <svg class="hero__path" viewBox="0 0 1920 712" aria-hidden="true">
+          <path id="loop" d="M117 176 H1803 A62 62 0 0 1 1865 238 V244 A62 62 0 0 1 1803 306 H117 A62 62 0 0 1 55 244 V238 A62 62 0 0 1 117 176 Z" fill="none"/>
+          <text><textPath href="#loop" class="js-path">все что в голове - в одном месте</textPath></text>
+          <text><textPath href="#loop" class="js-path">все что в голове - в одном месте</textPath></text>
+        </svg>
+        <h1 class="hero__title">
+          <span>место для</span>
+          <span class="hero__word"><span class="js-word">мыслей</span></span>
+        </h1>
+      </section>
+
+      <section class="sheet" id="notes">
+        <div class="story">
+          <div class="stage">
+            <p class="lead js-lead">&lt;notes&gt; — единый центр работы, пишите Markdown, диктуйте голосом, ставьте задачи</p>
+            <div class="app js-app">
+              <h2 class="app__title">приложение для заметок, которое не мешает думать</h2>
+              <div class="carousel js-carousel">
+                <article class="card"><img src="assets/img/card-1.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>markdown‑файлы в вашей папке</h3><p>каждая заметка — обычный .md файл, выберите любую папку и приложение начнёт работать</p></div></article>
+                <article class="card"><img src="assets/img/card-2.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>задачи в календаре</h3><p>добавьте дату к задаче в заметке, она появится в apple calendar, никаких отдельных приложений для планирования</p></div></article>
+                <article class="card" id="search"><img src="assets/img/card-3.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>умный поиск</h3><p>найдите заметку даже если не помните точные слова, семантический поиск понимает контекст</p></div></article>
+                <article class="card" id="voice"><img src="assets/img/card-4.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>диктовка</h3><p>нажмите хоткей в любом приложении и речь превратится в текст, расшифровка с таймкодами и именами спикеров, работает локально</p></div></article>
+                <article class="card"><img src="assets/img/card-5.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>шаблоны</h3><p>создавайте шаблоны заметок для ускорения работы с заметками</p></div></article>
+                <article class="card"><img src="assets/img/card-6.png" alt=""><div class="card__fade"></div><div class="card__text"><h3>github</h3><p>папка хранит всю историю изменений, верните любую правку, github подключается по желанию</p></div></article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="bottom">
+      <p class="wip">сайт в разработке</p>
+      <footer class="footer">
+        <div class="footer__sheet"></div>
+        <a class="footer__logo" href="#">&lt;notes&gt;</a>
+        <div class="footer__col footer__col--map">
+          <h4>карта сайта</h4>
+          <a href="#notes">заметки</a><a href="#search">поиск</a><a href="#voice">голос</a><a href="#security">безопасность</a>
+        </div>
+        <div class="footer__col footer__col--res">
+          <h4>ресурсы</h4>
+          <a href="#">документация</a><a href="#">первая настройка</a><a href="#faq">FAQ</a><a href="https://github.com/">github</a><a href="#">changelog</a>
+        </div>
+        <div class="footer__langs">
+          <a class="is-active" href="#">🇷🇺рус</a><a href="#">🇺🇸eng</a><a href="#">🇷🇸српски</a>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
