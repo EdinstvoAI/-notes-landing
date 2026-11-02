@@ -56,6 +56,12 @@ a { color: inherit; text-decoration: none; }
   mask-image: linear-gradient(#000 40%, transparent);
   -webkit-mask-image: linear-gradient(#000 40%, transparent);
 }
+/* iOS Safari paints the page under its translucent top bar: once stuck, extend the nav up there */
+.is-stuck .nav::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 200px;
+  background: rgba(255,255,255,.8);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
 .nav__logo {
   position: absolute; left: 633rem; top: 50rem;
   font: 15rem/normal "Martian Grotesk xWd", sans-serif; letter-spacing: -0.05em;
@@ -69,6 +75,11 @@ a { color: inherit; text-decoration: none; }
 
 /* hero */
 .top { position: relative; }
+/* dark backing so the sheet's rounded bottom corners sit on the bottom gradient */
+.top::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 60rem;
+  background: #1b0906; z-index: 1;
+}
 .hero {
   position: sticky; top: 0;
   height: 712rem;
@@ -175,7 +186,13 @@ a { color: inherit; text-decoration: none; }
   .ticker__track span { padding-right: 40rem; }
   .page { padding-top: 40rem; }
   .nav { height: 110rem; margin-bottom: -110rem; border-radius: 34rem 34rem 0 0; }
-  .nav__logo { left: 0; right: 0; top: 22rem; text-align: center; font-size: 16rem; }
+  /* iOS Safari paints the page under its translucent top bar: once stuck, extend the nav up there */
+.is-stuck .nav::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 200px;
+  background: rgba(255,255,255,.8);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.nav__logo { left: 0; right: 0; top: 22rem; text-align: center; font-size: 16rem; }
   .nav__links {
     left: 0; right: 0; top: 52rem; justify-content: center; gap: 14rem; font-size: 11rem;
     flex-wrap: wrap; padding: 0 16rem;
@@ -195,6 +212,7 @@ a { color: inherit; text-decoration: none; }
   .app__title { top: calc(50% - 230rem); font-size: 22rem; white-space: normal; padding: 0 24rem; line-height: 1.25; }
   .carousel { top: calc(50% - 140rem); height: 315rem; perspective: 900rem; }
   /* card markup stays in 450px units and is scaled by JS; bump text so it stays readable */
+  .card__fade { backdrop-filter: none; -webkit-backdrop-filter: none; }
   .card__text { top: 280rem; left: 24rem; width: 400rem; }
   .card h3 { font-size: 23rem; }
   .card p { font-size: 18rem; }

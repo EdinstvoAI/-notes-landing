@@ -12,7 +12,7 @@ const $$ = s => [...document.querySelectorAll(s)];
 // curved carousel: clone the set so the loop never shows a gap
 const carousel = $('.js-carousel');
 const originals = [...carousel.children];
-for (let k = 0; k < 2; k++) originals.forEach(c => carousel.appendChild(c.cloneNode(true)));
+originals.forEach(c => carousel.appendChild(c.cloneNode(true)));
 const cards = [...carousel.children];
 
 // language: each page (/, /en/, /sr/) declares its own in <html lang>
@@ -112,28 +112,39 @@ function measurePath() {
 const story = $('.story');
 const app = $('.js-app');
 
+// scroll work is batched into one frame; layout values are cached in fit()
+let R = rem(), MOBILE = isMobile();
+let scrollQueued = false;
 function onScroll() {
-  const r = rem();
-  root.classList.toggle('is-stuck', scrollY >= (isMobile() ? 40 : 61) * r - 1);
+  if (scrollQueued) return;
+  scrollQueued = true;
+  requestAnimationFrame(() => { scrollQueued = false; updateScroll(); });
+}
+const blur = v => (v > 0.01 ? `blur(${v}px)` : 'none');
+function updateScroll() {
+  const r = R;
+  root.classList.toggle('is-stuck', scrollY >= (MOBILE ? 40 : 61) * r - 1);
   const scrolled = -story.getBoundingClientRect().top;
-  const range = (isMobile() ? 900 : 1400) * r;
+  const range = (MOBILE ? 900 : 1400) * r;
   const reveal = clamp((scrolled + innerHeight * 0.5) / (range * 0.55 + innerHeight * 0.5));
   leadWords.forEach((w, i) => { w.style.opacity = 0.12 + 0.88 * clamp(reveal * leadWords.length - i); });
   const swap = clamp((scrolled / range - 0.6) / 0.2);
   lead.style.opacity = 1 - swap;
   lead.style.transform = `translateY(${-80 * swap * r}px)`;
-  lead.style.filter = `blur(${swap * 12 * r}px)`;
+  lead.style.filter = blur(swap * 12 * r);
   app.style.opacity = swap;
   app.style.transform = `translateY(${(1 - swap) * 120 * r}px)`;
-  app.style.filter = `blur(${(1 - swap) * 12 * r}px)`;
+  app.style.filter = blur((1 - swap) * 12 * r);
   app.style.pointerEvents = swap > 0.5 ? 'auto' : 'none';
 }
 
 function fit() {
-  root.style.fontSize = rem() + 'px';
+  R = rem();
+  MOBILE = isMobile();
+  root.style.fontSize = R + 'px';
   if (tickerText) fillTicker();
   measurePath();
-  onScroll();
+  updateScroll();
 }
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', fit);
@@ -156,11 +167,11 @@ carousel.addEventListener('pointerdown', e => {
 carousel.addEventListener('pointermove', e => {
   if (!dragging) return;
   const now = performance.now();
-  const dx = (e.clientX - dragX) / rem();
+  const dx = (e.clientX - dragX) / R;
   shift -= dx;
   dragX = e.clientX;
   const dt = Math.max(1, now - lastMoveT) / 1000;
-  velocity = -((e.clientX - lastMoveX) / rem()) / dt;
+  velocity = -((e.clientX - lastMoveX) / R) / dt;
   lastMoveX = e.clientX;
   lastMoveT = now;
 });
@@ -174,12 +185,17 @@ carousel.addEventListener('pointerup', release);
 carousel.addEventListener('pointercancel', release);
 carousel.addEventListener('dragstart', e => e.preventDefault());
 
+// only animate what is on screen
+let heroOn = true, carouselOn = false;
+new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; }).observe(hero);
+new IntersectionObserver(([e]) => { carouselOn = e.isIntersecting; }).observe(carousel);
+
 let last = performance.now();
 function frame(now) {
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
-  const r = rem();
-  const mobile = isMobile();
+  const r = R;
+  const mobile = MOBILE;
   const W = base();
   const scale = mobile ? 0.7 : 1;
   const step = 469.6 * scale;
@@ -191,9 +207,12 @@ function frame(now) {
     if (Math.abs(velocity) < 1) velocity = 0;
   }
   shift = ((shift % total) + total) % total;
-  if (!reduced) pathOffset = (pathOffset + (mobile ? 40 : 60) * dt) % pathLen;
-  paths[0].setAttribute('startOffset', pathOffset);
-  paths[1].setAttribute('startOffset', pathOffset - pathLen);
+  if (heroOn && !reduced) {
+    pathOffset = (pathOffset + (mobile ? 40 : 60) * dt) % pathLen;
+    paths[0].setAttribute('startOffset', pathOffset);
+    paths[1].setAttribute('startOffset', pathOffset - pathLen);
+  }
+  if (!carouselOn || app.style.opacity === '0') { requestAnimationFrame(frame); return; }
 
   const half = 449.6 * scale / 2;
   for (let i = 0; i < cards.length; i++) {
