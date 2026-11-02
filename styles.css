@@ -56,18 +56,6 @@ a { color: inherit; text-decoration: none; }
   mask-image: linear-gradient(#000 40%, transparent);
   -webkit-mask-image: linear-gradient(#000 40%, transparent);
 }
-/* orange corner caps keep the rounded top while content scrolls underneath */
-.nav__corner {
-  position: absolute; top: 0; width: 50rem; height: 50rem; overflow: hidden; pointer-events: none;
-}
-.nav__corner::before {
-  content: ""; position: absolute; top: 0; width: 100rem; height: 100rem; border-radius: 50%;
-  box-shadow: 0 0 0 60rem #e54d33;
-}
-.nav__corner--l { left: 0; }
-.nav__corner--l::before { left: 0; }
-.nav__corner--r { right: 0; }
-.nav__corner--r::before { right: 0; }
 .nav__logo {
   position: absolute; left: 633rem; top: 50rem;
   font: 15rem/normal "Martian Grotesk xWd", sans-serif; letter-spacing: -0.05em;
@@ -86,20 +74,27 @@ a { color: inherit; text-decoration: none; }
   height: 712rem;
   background:
     url("assets/img/hero.png") 0 0 / 100% 100% no-repeat,
-    url("assets/img/hero-under.png") 0 0 / 100% 517rem no-repeat;
+    url("assets/img/hero-under.png") 0 0 / 100% 517rem no-repeat,
+    linear-gradient(51.44deg, #fff 17.731%, #ffb7ab 81.335%);
   border-radius: 50rem;
 }
+/* once the ticker is scrolled away the top corners straighten out */
+.hero, .nav, .nav::before { transition: border-radius .5s cubic-bezier(.4,0,.2,1); }
+.is-stuck .hero, .is-stuck .nav, .is-stuck .nav::before { border-top-left-radius: 0; border-top-right-radius: 0; }
 .hero__path { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.hero__path text { font-size: 15rem; fill: #000; letter-spacing: -0.07em; }
+.hero__path text { font-size: 15px; fill: #000; letter-spacing: -0.07em; } /* svg user units = design px */
 .hero__title {
   position: absolute; left: 0; right: 0; top: 192rem;
   display: flex; flex-direction: column; align-items: center;
   font-weight: 400; font-size: 40rem; line-height: 48rem; white-space: nowrap;
 }
-.hero__word { position: relative; display: block; height: 48rem; overflow: hidden; }
-.hero__word span { display: block; transition: transform .7s cubic-bezier(.65,0,.35,1), opacity .7s ease, filter .7s ease; }
-.hero__word span.is-out { transform: translateY(-60%); opacity: 0; filter: blur(8rem); }
-.hero__word span.is-in { transform: translateY(60%); opacity: 0; filter: blur(8rem); transition: none; }
+.hero__word { position: relative; display: block; width: 100%; height: 48rem; }
+.hero__word span {
+  position: absolute; left: 50%; top: 0; translate: -50% 0; white-space: nowrap;
+  transition: transform .9s cubic-bezier(.65,0,.35,1), opacity .9s ease, filter .9s ease;
+}
+.hero__word span.is-out { transform: translateY(-45%); opacity: 0; filter: blur(10rem); }
+.hero__word span.is-in { transform: translateY(45%); opacity: 0; filter: blur(10rem); transition: none; }
 
 /* white sheet */
 .sheet {
@@ -122,17 +117,19 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* carousel */
+.carousel.is-dragging { cursor: grabbing; }
 .carousel {
   position: absolute; left: 0; right: 0; top: calc(50% - 138rem); height: 449.6rem;
   perspective: 1400rem; perspective-origin: 50% 50%;
+  cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
 }
 .card {
-  position: absolute; left: 0; top: 0;
+  position: absolute; left: 0; top: 0; transform-origin: 0 0;
   width: 449.6rem; height: 449.6rem; border-radius: 20rem; overflow: hidden;
   background: #f9f9f9;
   will-change: transform;
 }
-.card img { position: absolute; inset: 0; width: 450rem; height: 450rem; display: block; }
+.card img { pointer-events: none; position: absolute; inset: 0; width: 450rem; height: 450rem; display: block; }
 .card__fade {
   position: absolute; inset: 0; width: 450rem; height: 450rem;
   background: linear-gradient(rgba(255,255,255,0) 6.111%, #fff);
@@ -169,6 +166,54 @@ a { color: inherit; text-decoration: none; }
 .footer__col--res a + a { margin-top: 15rem; }
 .footer__langs { left: 187.11rem; top: 1029.72rem; display: flex; gap: 20rem; font-size: 13rem; letter-spacing: 0; white-space: nowrap; }
 .footer__langs a:not(.is-active) { opacity: .3; }
+
+/* ---------- mobile: 1rem = 1px of a 430px-wide frame ---------- */
+@media (max-width: 767px) {
+  html { font-size: calc(100vw / 430); }
+  .ticker { height: 80rem; }
+  .ticker__track { top: 12rem; font-size: 14rem; animation-duration: 14s; }
+  .ticker__track span { padding-right: 40rem; }
+  .page { padding-top: 40rem; }
+  .nav { height: 110rem; margin-bottom: -110rem; border-radius: 34rem 34rem 0 0; }
+  .nav__logo { left: 0; right: 0; top: 22rem; text-align: center; font-size: 16rem; }
+  .nav__links {
+    left: 0; right: 0; top: 52rem; justify-content: center; gap: 14rem; font-size: 11rem;
+    flex-wrap: wrap; padding: 0 16rem;
+  }
+  .hero {
+    height: 600rem; border-radius: 34rem;
+    background-size: auto 100%, auto 517rem, auto;
+    background-position: 30% 0, 30% 0, 0 0;
+  }
+  .hero__path text { font-size: 12px; }
+  .hero__title { top: 250rem; font-size: 30rem; line-height: 38rem; }
+  .hero__word { height: 38rem; }
+  .sheet { margin-top: -70rem; border-radius: 34rem; }
+  .story { height: calc(100vh + 900rem); }
+  .stage { border-radius: 34rem; }
+  .lead { width: 380rem; margin-left: -190rem; font-size: 24rem; }
+  .app__title { top: calc(50% - 230rem); font-size: 22rem; white-space: normal; padding: 0 24rem; line-height: 1.25; }
+  .carousel { top: calc(50% - 140rem); height: 315rem; perspective: 900rem; }
+  /* card markup stays in 450px units and is scaled by JS; bump text so it stays readable */
+  .card__text { top: 280rem; left: 24rem; width: 400rem; }
+  .card h3 { font-size: 23rem; }
+  .card p { font-size: 18rem; }
+  .bottom { height: auto; padding: 120rem 0 0; }
+  .wip { position: static; font-size: 24rem; }
+  .footer {
+    position: relative; margin: 110rem -40rem -60rem; padding: 50rem 70rem 120rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 34rem 20rem;
+    transform: rotate(-6deg); transform-origin: 50% 0;
+  }
+  .footer > * { position: static; transform: none; }
+  .footer__sheet { position: absolute; inset: 0; width: auto; height: auto; transform: none; border-radius: 40rem; z-index: -1; }
+  .footer__logo { grid-column: 1 / -1; font-size: 44rem; }
+  .footer__col { width: auto; }
+  .footer__col h4 { font-size: 14rem; }
+  .footer__col a { font-size: 13rem; }
+  .footer__col--res a { line-height: normal; }
+  .footer__langs { grid-column: 1 / -1; font-size: 13rem; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .ticker__track { animation: none; }

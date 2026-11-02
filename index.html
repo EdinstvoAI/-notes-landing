@@ -18,7 +18,6 @@
 
   <main class="page">
     <header class="nav">
-      <i class="nav__corner nav__corner--l"></i><i class="nav__corner nav__corner--r"></i>
       <a class="nav__logo" href="#">&lt;notes&gt;</a>
       <nav class="nav__links">
         <a href="#notes">Заметки</a>
@@ -38,7 +37,7 @@
           <text><textPath href="#loop" class="js-path">все что в голове - в одном месте</textPath></text>
         </svg>
         <h1 class="hero__title">
-          <span>место для</span>
+          <span class="js-place">место для</span>
           <span class="hero__word"><span class="js-word">мыслей</span></span>
         </h1>
       </section>
@@ -77,12 +76,13 @@
           <a href="#">документация</a><a href="#">первая настройка</a><a href="#faq">FAQ</a><a href="https://github.com/">github</a><a href="#">changelog</a>
         </div>
         <div class="footer__langs">
-          <a class="is-active" href="#">🇷🇺рус</a><a href="#">🇺🇸eng</a><a href="#">🇷🇸српски</a>
+          <a data-lang="ru" href="?lang=ru">🇷🇺рус</a><a data-lang="en" href="?lang=en">🇺🇸eng</a><a data-lang="sr" href="?lang=sr">🇷🇸српски</a>
         </div>
       </footer>
     </section>
   </main>
 
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
