@@ -212,7 +212,6 @@ a { color: inherit; text-decoration: none; }
   .app__title { top: calc(50% - 230rem); font-size: 22rem; white-space: normal; padding: 0 24rem; line-height: 1.25; }
   .carousel { top: calc(50% - 140rem); height: 315rem; perspective: 900rem; }
   /* card markup stays in 450px units and is scaled by JS; bump text so it stays readable */
-  .card__fade { backdrop-filter: none; -webkit-backdrop-filter: none; }
   .card__text { top: 280rem; left: 24rem; width: 400rem; }
   .card h3 { font-size: 23rem; }
   .card p { font-size: 18rem; }
