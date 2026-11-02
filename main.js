@@ -15,14 +15,11 @@ const originals = [...carousel.children];
 for (let k = 0; k < 2; k++) originals.forEach(c => carousel.appendChild(c.cloneNode(true)));
 const cards = [...carousel.children];
 
-// language
+// language: each page (/, /en/, /sr/) declares its own in <html lang>
 const langs = Object.keys(I18N);
-let lang = new URLSearchParams(location.search).get('lang');
-if (!langs.includes(lang)) {
-  try { lang = localStorage.getItem('lang'); } catch {}
-}
-if (!langs.includes(lang)) lang = (navigator.language || 'ru').slice(0, 2);
-if (!langs.includes(lang)) lang = 'en';
+const legacy = new URLSearchParams(location.search).get('lang');
+if (langs.includes(legacy)) location.replace(new URL(legacy === 'ru' ? '/' : `/${legacy}/`, location.href));
+let lang = langs.includes(root.lang) ? root.lang : 'ru';
 
 const lead = $('.js-lead');
 let leadWords = [];
@@ -33,10 +30,6 @@ function applyLang(next) {
   const t = I18N[lang];
   root.lang = lang;
   document.title = t.title;
-  $('meta[name="description"]').content = t.desc;
-  $('meta[property="og:title"]').content = t.title;
-  $('meta[property="og:description"]').content = t.desc;
-  $('link[rel="canonical"]').href = `https://notes.makark.ru/?lang=${lang}`;
   fillTicker(t.ticker);
   $$('.nav__links a').forEach((a, i) => (a.textContent = t.nav[i]));
   $$('.js-path').forEach(p => (p.textContent = t.path));
@@ -60,13 +53,6 @@ function applyLang(next) {
   measurePath();
   onScroll();
 }
-
-$$('.footer__langs a').forEach(a => a.addEventListener('click', e => {
-  e.preventDefault();
-  try { localStorage.setItem('lang', a.dataset.lang); } catch {}
-  history.replaceState(null, '', `?lang=${a.dataset.lang}`);
-  applyLang(a.dataset.lang);
-}));
 
 // ticker: two identical halves, each wider than the screen, so -50% loops seamlessly
 const track = $('.ticker__track');

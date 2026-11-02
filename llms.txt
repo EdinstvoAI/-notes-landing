@@ -2,7 +2,7 @@
 
 > A notes app that doesn't get in the way of thinking: one hub for your work — write Markdown, dictate by voice, set tasks. The site is under construction.
 
-Languages: Russian (default), English, Serbian — https://notes.makark.ru/?lang=ru, ?lang=en, ?lang=sr
+Languages: Russian https://notes.makark.ru/, English https://notes.makark.ru/en/, Serbian https://notes.makark.ru/sr/
 
 ## Features
 
