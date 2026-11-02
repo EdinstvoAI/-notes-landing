@@ -1,0 +1,23 @@
+# <notes>
+
+> A notes app that doesn't get in the way of thinking: one hub for your work — write Markdown, dictate by voice, set tasks. The site is under construction.
+
+Languages: Russian (default), English, Serbian — https://notes.makark.ru/?lang=ru, ?lang=en, ?lang=sr
+
+## Features
+
+- Markdown files in your folder: every note is a plain .md file; pick any folder and the app starts working.
+- Tasks in your calendar: add a date to a task in a note and it shows up in Apple Calendar, no separate planning apps.
+- Smart search: find a note even if you don't remember the exact words; semantic search understands context.
+- Dictation: press a hotkey in any app and speech turns into text; transcripts with timestamps and speaker names; runs locally.
+- Templates: create note templates to speed up your work.
+- GitHub: the folder keeps the full change history, restore any edit; GitHub connects if you want.
+
+## Other
+
+- Quick notes, folders, search, file sync, dark theme.
+- Pages: https://notes.makark.ru/
+
+## На русском
+
+<notes> — приложение для заметок, которое не мешает думать: markdown-файлы в вашей папке, задачи в календаре, умный поиск, локальная диктовка, шаблоны, история изменений через github.

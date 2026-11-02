@@ -33,6 +33,10 @@ function applyLang(next) {
   const t = I18N[lang];
   root.lang = lang;
   document.title = t.title;
+  $('meta[name="description"]').content = t.desc;
+  $('meta[property="og:title"]').content = t.title;
+  $('meta[property="og:description"]').content = t.desc;
+  $('link[rel="canonical"]').href = `https://notes.makark.ru/?lang=${lang}`;
   fillTicker(t.ticker);
   $$('.nav__links a').forEach((a, i) => (a.textContent = t.nav[i]));
   $$('.js-path').forEach(p => (p.textContent = t.path));

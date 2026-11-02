@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://notes.makark.ru/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://notes.makark.ru/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://notes.makark.ru/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://notes.makark.ru/?lang=sr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://notes.makark.ru/"/>
+  </url>
+  <url>
+    <loc>https://notes.makark.ru/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://notes.makark.ru/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://notes.makark.ru/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://notes.makark.ru/?lang=sr"/>
+  </url>
+  <url>
+    <loc>https://notes.makark.ru/?lang=sr</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://notes.makark.ru/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://notes.makark.ru/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://notes.makark.ru/?lang=sr"/>
+  </url>
+</urlset>
