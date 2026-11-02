@@ -1,6 +1,6 @@
 const I18N = {
   ru: {
-    title: '<notes> — заметки в Markdown, диктовка голосом и задачи',
+    title: '<notes> - заметки в markdown, диктовка голосом и задачи',
     desc: 'Приложение для заметок, которое не мешает думать: markdown-файлы в вашей папке, диктовка голосом, задачи в календаре, умный поиск.',
     ticker: '✦быстрые заметки ✦ папки ✦ поиск ✦ синхронизация файлов ✦ тёмная тема ✦',
     nav: ['Заметки', 'Поиск', 'Голос', 'Безопасность', 'FAQ', 'Github'],
@@ -23,7 +23,7 @@ const I18N = {
     res: ['ресурсы', 'документация', 'первая настройка', 'FAQ', 'github', 'changelog'],
   },
   en: {
-    title: '<notes> — Markdown notes, voice dictation and tasks',
+    title: '<notes> - markdown notes, voice dictation and tasks',
     desc: 'A notes app that doesn’t get in the way of thinking: markdown files in your folder, voice dictation, tasks in your calendar, smart search.',
     ticker: '✦quick notes ✦ folders ✦ search ✦ file sync ✦ dark theme ✦',
     nav: ['Notes', 'Search', 'Voice', 'Security', 'FAQ', 'Github'],
@@ -46,7 +46,7 @@ const I18N = {
     res: ['resources', 'documentation', 'first setup', 'FAQ', 'github', 'changelog'],
   },
   sr: {
-    title: '<notes> — Markdown белешке, диктирање гласом и задаци',
+    title: '<notes> - markdown белешке, диктирање гласом и задаци',
     desc: 'Апликација за белешке која не омета размишљање: markdown фајлови у вашој фасцикли, диктирање гласом, задаци у календару, паметна претрага.',
     ticker: '✦брзе белешке ✦ фасцикле ✦ претрага ✦ синхронизација фајлова ✦ тамна тема ✦',
     nav: ['Белешке', 'Претрага', 'Глас', 'Безбедност', 'FAQ', 'Github'],

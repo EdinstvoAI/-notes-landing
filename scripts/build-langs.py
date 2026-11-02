@@ -13,13 +13,13 @@ SITE = 'https://notes.makark.ru'
 LANGS = {
     'en': {
         'locale': 'en_US',
-        'title': '<notes> — Markdown notes, voice dictation and tasks',
+        'title': '<notes> - markdown notes, voice dictation and tasks',
         'desc': 'A notes app that doesn’t get in the way of thinking: markdown files in your folder, voice dictation, tasks in your calendar, smart search.',
         'alt': '<notes> — a place for thoughts',
     },
     'sr': {
         'locale': 'sr_RS',
-        'title': '<notes> — Markdown белешке, диктирање гласом и задаци',
+        'title': '<notes> - markdown белешке, диктирање гласом и задаци',
         'desc': 'Апликација за белешке која не омета размишљање: markdown фајлови у вашој фасцикли, диктирање гласом, задаци у календару, паметна претрага.',
         'alt': '<notes> — место за мисли',
     },
