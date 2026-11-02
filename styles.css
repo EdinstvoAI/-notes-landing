@@ -45,22 +45,25 @@ a { color: inherit; text-decoration: none; }
 
 /* nav */
 .nav {
+  --nav-h: 176rem;
   position: sticky; top: 0; z-index: 10;
-  height: 176rem; margin-bottom: -176rem;
+  height: var(--nav-h); margin-bottom: calc(-1 * var(--nav-h));
   border-radius: 50rem 50rem 0 0;
   background: url("assets/img/nav.webp") 0 0 / 100% 100%;
 }
 .nav::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  mask-image: linear-gradient(#000 40%, transparent);
-  -webkit-mask-image: linear-gradient(#000 40%, transparent);
+  /* blur fades out over the lower 60% of the nav, measured from the bottom so it survives the extension below */
+  mask-image: linear-gradient(to top, transparent, #000 calc(var(--nav-h) * .6));
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 calc(var(--nav-h) * .6));
 }
-/* iOS Safari paints the page under its translucent top bar: once stuck, extend the nav up there */
+/* iOS Safari paints the page under its translucent top bar: once stuck, continue the nav up there.
+   One blur layer (::before) and a tint matching the nav's top edge, so there is no seam */
+.is-stuck .nav::before { top: -200px; }
 .is-stuck .nav::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 200px;
   background: rgba(255,255,255,.8);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .nav__logo {
   position: absolute; left: 633rem; top: 50rem;
@@ -185,14 +188,9 @@ a { color: inherit; text-decoration: none; }
   .ticker__track { top: 12rem; font-size: 14rem; animation-duration: 14s; }
   .ticker__track span { padding-right: 40rem; }
   .page { padding-top: 40rem; }
-  .nav { height: 110rem; margin-bottom: -110rem; border-radius: 34rem 34rem 0 0; }
-  /* iOS Safari paints the page under its translucent top bar: once stuck, extend the nav up there */
-.is-stuck .nav::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 200px;
-  background: rgba(255,255,255,.8);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-}
-.nav__logo { left: 0; right: 0; top: 22rem; text-align: center; font-size: 16rem; }
+  /* taller nav so the white fade has the same long tail as on desktop */
+  .nav { --nav-h: 160rem; border-radius: 34rem 34rem 0 0; }
+  .nav__logo { left: 0; right: 0; top: 22rem; text-align: center; font-size: 16rem; }
   .nav__links {
     left: 0; right: 0; top: 52rem; justify-content: center; gap: 14rem; font-size: 11rem;
     flex-wrap: wrap; padding: 0 16rem;
