@@ -1,280 +1,120 @@
 const root = document.documentElement;
-const MOBILE_MAX = 768;
-const isMobile = () => root.clientWidth < MOBILE_MAX;
-// 1rem = 1px of the Figma frame: 1920 wide on desktop, 430 wide on mobile
-const base = () => (isMobile() ? 430 : 1920);
-const rem = () => root.clientWidth / base();
-const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+const mobile = () => root.clientWidth < 768;
+const base = () => mobile() ? 430 : 1920;
+const scale = () => root.clientWidth / base();
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
 
-// curved carousel: clone the set so the loop never shows a gap
-const carousel = $('.js-carousel');
-const originals = [...carousel.children];
-originals.forEach(c => carousel.appendChild(c.cloneNode(true)));
-const cards = [...carousel.children];
-
-// language: each page (/, /en/, /sr/) declares its own in <html lang>
 const langs = Object.keys(I18N);
 const legacy = new URLSearchParams(location.search).get('lang');
 if (langs.includes(legacy)) location.replace(new URL(legacy === 'ru' ? '/' : `/${legacy}/`, location.href));
-let lang = langs.includes(root.lang) ? root.lang : 'ru';
+const lang = langs.includes(root.lang) ? root.lang : 'ru';
+const t = I18N[lang];
+document.title = t.title;
 
-const lead = $('.js-lead');
-let leadWords = [];
-let words = [];
-
-function applyLang(next) {
-  lang = next;
-  const t = I18N[lang];
-  root.lang = lang;
-  document.title = t.title;
-  fillTicker(t.ticker);
-  $$('.nav__links a').forEach((a, i) => (a.textContent = t.nav[i]));
-  $$('.js-path').forEach(p => (p.textContent = t.path));
-  $('.js-place').textContent = t.place;
-  words = t.words;
-  wi = 0;
-  word.textContent = words[0];
-  lead.innerHTML = t.lead.split(' ')
-    .map(w => `<span class="w">${w.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>`).join(' ');
-  leadWords = [...lead.querySelectorAll('.w')];
-  $('.app__title').textContent = t.tagline;
-  cards.forEach((c, i) => {
-    const [h, p] = t.cards[i % t.cards.length];
-    c.querySelector('h3').textContent = h;
-    c.querySelector('p').textContent = p;
-  });
-  const wip = $('.wip');
-  if (wip) wip.textContent = t.wip;
-  $$('.footer__col--map > *').forEach((el, i) => (el.textContent = t.map[i]));
-  $$('.footer__col--res > *').forEach((el, i) => (el.textContent = t.res[i]));
-  $$('.footer__langs a').forEach(a => a.classList.toggle('is-active', a.dataset.lang === lang));
-  measurePath();
-  onScroll();
-}
-
-// ticker: two identical halves, each wider than the screen, so -50% loops seamlessly
 const track = $('.ticker__track');
-let tickerText = '';
-function fillTicker(text = tickerText) {
-  tickerText = text;
-  track.innerHTML = '';
-  const span = document.createElement('span');
-  span.textContent = text;
-  track.appendChild(span);
-  const n = Math.max(1, Math.ceil(root.clientWidth / span.offsetWidth) + 1);
-  for (let i = 1; i < n * 2; i++) track.appendChild(span.cloneNode(true));
-  track.style.animationDuration = `${n * 9}s`;
+function fillTicker() {
+  track.replaceChildren();
+  const item = document.createElement('span');
+  item.textContent = t.ticker;
+  track.append(item);
+  const copies = Math.max(4, Math.ceil(root.clientWidth / item.offsetWidth) * 2 + 2);
+  for (let i = 1; i < copies; i++) track.append(item.cloneNode(true));
+  track.style.animationDuration = `${copies * 5}s`;
 }
 
-// "место для ..." word cycle: old word drifts up into blur while the next one rises in
+$$('.nav__links a').forEach((a, i) => { if (t.nav[i]) a.textContent = t.nav[i]; });
+$$('.js-path').forEach(p => { p.textContent = t.path; });
+$('.js-place').textContent = t.place;
+$('.js-lead').textContent = t.lead;
+$$('.footer__col--map > *').forEach((el, i) => { if (t.map[i]) el.textContent = t.map[i]; });
+$$('.footer__col--res > *').forEach((el, i) => { if (t.res[i]) el.textContent = t.res[i]; });
+$$('.footer__langs a').forEach(a => a.classList.toggle('is-active', a.dataset.lang === lang));
+
 const wordBox = $('.hero__word');
 let word = $('.js-word');
-let wi = 0;
+let wordIndex = 0;
+const words = t.words;
 setInterval(() => {
   if (reduced || document.hidden) return;
-  wi = (wi + 1) % words.length;
   const old = word;
   old.classList.add('is-out');
-  setTimeout(() => old.remove(), 900);
   word = document.createElement('span');
   word.className = 'js-word is-in';
-  word.textContent = words[wi];
-  wordBox.appendChild(word);
+  word.textContent = words[++wordIndex % words.length];
+  wordBox.append(word);
   word.offsetHeight;
   word.classList.remove('is-in');
+  setTimeout(() => old.remove(), 900);
 }, 2400);
 
-// one phrase running around the hero contour; the second copy trails by a full lap
 const hero = $('.hero');
 const svg = $('.hero__path');
 const loop = $('#loop');
 const paths = $$('.js-path');
-let pathLen = 1;
+let pathLength = 1;
 let pathOffset = 0;
-
-function measurePath() {
-  const r = rem();
+function measure() {
+  const r = scale();
+  root.style.fontSize = `${r}px`;
   const w = hero.clientWidth / r;
   const h = hero.clientHeight / r;
-  // desktop rectangle comes from the Figma frame, mobile one hugs the card
-  const [x, y, x2, y2, rad] = isMobile() ? [14, 104, w - 14, h - 24, 34] : [55, 176, 1865, 306, 62];
+  const [x, y, x2, y2, radius] = mobile() ? [14, 104, w - 14, h - 24, 34] : [55, 176, 1865, 306, 62];
   svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-  loop.setAttribute('d',
-    `M${x + rad} ${y} H${x2 - rad} A${rad} ${rad} 0 0 1 ${x2} ${y + rad} V${y2 - rad} ` +
-    `A${rad} ${rad} 0 0 1 ${x2 - rad} ${y2} H${x + rad} A${rad} ${rad} 0 0 1 ${x} ${y2 - rad} ` +
-    `V${y + rad} A${rad} ${rad} 0 0 1 ${x + rad} ${y} Z`);
-  pathLen = loop.getTotalLength();
+  loop.setAttribute('d', `M${x + radius} ${y}H${x2 - radius}A${radius} ${radius} 0 0 1 ${x2} ${y + radius}V${y2 - radius}A${radius} ${radius} 0 0 1 ${x2 - radius} ${y2}H${x + radius}A${radius} ${radius} 0 0 1 ${x} ${y2 - radius}V${y + radius}A${radius} ${radius} 0 0 1 ${x + radius} ${y}Z`);
+  pathLength = loop.getTotalLength();
+  fillTicker();
 }
 
-// lead words revealed by scroll, then swapped for the app block
-const story = $('.story');
-const app = $('.js-app');
-
-// scroll work is batched into one frame; layout values are cached in fit()
-let R = rem(), MOBILE = isMobile();
-let scrollQueued = false;
-function onScroll() {
-  if (scrollQueued) return;
-  scrollQueued = true;
-  requestAnimationFrame(() => { scrollQueued = false; updateScroll(); });
-}
-const blur = v => (v > 0.01 ? `blur(${v}px)` : 'none');
-function updateScroll() {
-  const r = R;
-  root.classList.toggle('is-stuck', scrollY >= (MOBILE ? 40 : 61) * r - 1);
-  const scrolled = -story.getBoundingClientRect().top;
-  const range = (MOBILE ? 900 : 1400) * r;
-  const reveal = clamp((scrolled + innerHeight * 0.5) / (range * 0.55 + innerHeight * 0.5));
-  leadWords.forEach((w, i) => { w.style.opacity = 0.12 + 0.88 * clamp(reveal * leadWords.length - i); });
-  const swap = clamp((scrolled / range - 0.6) / 0.2);
-  lead.style.opacity = 1 - swap;
-  lead.style.transform = `translateY(${-80 * swap * r}px)`;
-  lead.style.filter = blur(swap * 12 * r);
-  app.style.opacity = swap;
-  app.style.transform = `translateY(${(1 - swap) * 120 * r}px)`;
-  app.style.filter = blur((1 - swap) * 12 * r);
-  app.style.pointerEvents = swap > 0.5 ? 'auto' : 'none';
-}
-
-function fit() {
-  R = rem();
-  MOBILE = isMobile();
-  root.style.fontSize = R + 'px';
-  if (tickerText) fillTicker();
-  measurePath();
-  updateScroll();
-}
-addEventListener('scroll', onScroll, { passive: true });
-addEventListener('resize', fit);
-
-// carousel motion: constant drift + drag with inertia
-const SPEED = 45;              // drift, design px per second
-let shift = 0;
-let velocity = 0;              // extra px/s from a throw
-let dragging = false;
-let dragX = 0, lastMoveX = 0, lastMoveT = 0;
-
-carousel.addEventListener('pointerdown', e => {
-  dragging = true;
-  velocity = 0;
-  dragX = lastMoveX = e.clientX;
-  lastMoveT = performance.now();
-  carousel.setPointerCapture(e.pointerId);
-  carousel.classList.add('is-dragging');
-});
-carousel.addEventListener('pointermove', e => {
-  if (!dragging) return;
-  const now = performance.now();
-  const dx = (e.clientX - dragX) / R;
-  shift -= dx;
-  dragX = e.clientX;
-  const dt = Math.max(1, now - lastMoveT) / 1000;
-  velocity = -((e.clientX - lastMoveX) / R) / dt;
-  lastMoveX = e.clientX;
-  lastMoveT = now;
-});
-const release = () => {
-  if (!dragging) return;
-  dragging = false;
-  carousel.classList.remove('is-dragging');
-  if (performance.now() - lastMoveT > 80) velocity = 0;
-};
-carousel.addEventListener('pointerup', release);
-carousel.addEventListener('pointercancel', release);
-carousel.addEventListener('dragstart', e => e.preventDefault());
-
-// only animate what is on screen
-let heroOn = true, carouselOn = false;
-new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; }).observe(hero);
-new IntersectionObserver(([e]) => { carouselOn = e.isIntersecting; }).observe(carousel);
-
+let visibleHero = true;
+new IntersectionObserver(([entry]) => { visibleHero = entry.isIntersecting; }).observe(hero);
 let last = performance.now();
-function frame(now) {
-  const dt = Math.min(0.05, (now - last) / 1000);
+function animate(now) {
+  const dt = Math.min(.05, (now - last) / 1000);
   last = now;
-  const r = R;
-  const mobile = MOBILE;
-  const W = base();
-  const scale = mobile ? 0.7 : 1;
-  const step = 469.6 * scale;
-  const total = cards.length * step;
-
-  if (!dragging) {
-    shift += ((reduced ? 0 : SPEED) + velocity) * dt;
-    velocity *= Math.pow(0.04, dt);          // friction
-    if (Math.abs(velocity) < 1) velocity = 0;
-  }
-  shift = ((shift % total) + total) % total;
-  if (heroOn && !reduced) {
-    pathOffset = (pathOffset + (mobile ? 40 : 60) * dt) % pathLen;
+  if (visibleHero && !reduced) {
+    pathOffset = (pathOffset + (mobile() ? 36 : 58) * dt) % pathLength;
     paths[0].setAttribute('startOffset', pathOffset);
-    paths[1].setAttribute('startOffset', pathOffset - pathLen);
+    paths[1].setAttribute('startOffset', pathOffset - pathLength);
   }
-  if (!carouselOn || app.style.opacity === '0') { requestAnimationFrame(frame); return; }
-
-  const half = 449.6 * scale / 2;
-  for (let i = 0; i < cards.length; i++) {
-    let x = ((i * step - shift) % total + total) % total - step * 2;
-    const d = (x + half - W / 2) / (W / 2);   // -1 left edge .. 1 right edge
-    const ang = -d * (mobile ? 16 : 32);
-    const z = d * d * (mobile ? 50 : 220);
-    cards[i].style.transform =
-      `translateX(${x * r}px) translateZ(${z * r}px) rotateY(${ang}deg) scale(${scale})`;
-  }
-  requestAnimationFrame(frame);
+  requestAnimationFrame(animate);
 }
 
-fit();
-applyLang(lang);
-requestAnimationFrame(frame);
-document.fonts.ready.then(() => { fillTicker(); measurePath(); });
+const calendar = $('.calendar');
+const mcp = $('.mcp-feature');
+const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+  entry.target.classList.toggle('is-visible', entry.isIntersecting);
+}), { threshold: .35 });
+[calendar, mcp].forEach(el => observer.observe(el));
 
-// lightweight feature demos: start only when their section reaches the viewport
-const revealed = $$('.reveal');
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => entry.target.classList.toggle('is-visible', entry.isIntersecting));
-}, { threshold: .22 });
-revealed.forEach(el => revealObserver.observe(el));
-
-const voiceText = $('.js-voice-text');
-const voiceSection = $('.voice-feature');
-const voicePhrase = 'Записать итоги созвона и добавить задачу на пятницу.';
-let voiceTimer;
-new IntersectionObserver(([entry]) => {
-  clearInterval(voiceTimer);
-  if (!entry.isIntersecting) return;
-  let i = 0;
-  voiceText.textContent = '';
-  voiceTimer = setInterval(() => {
-    voiceText.textContent = voicePhrase.slice(0, ++i);
-    if (i >= voicePhrase.length) clearInterval(voiceTimer);
-  }, 38);
-}, { threshold: .55 }).observe(voiceSection);
-
-const searchSection = $('.search-feature');
-const searchQuery = $('.js-search-query');
-const searchStatus = $('.js-search-status');
-const searchResult = $('.search-result');
+const search = $('.search-feature');
+const query = $('.js-search-query');
+const status = $('.js-search-status');
+const result = $('.search-result');
 let searchPlayed = false;
-function playSearch() {
-  if (searchPlayed) return;
+new IntersectionObserver(([entry]) => {
+  if (!entry.isIntersecting || searchPlayed) return;
   searchPlayed = true;
-  searchSection.classList.add('is-active');
-  const query = 'что решили про запуск?';
-  let i = 0;
-  const timer = setInterval(() => {
-    searchQuery.textContent = query.slice(0, ++i);
-    if (i >= query.length) {
-      clearInterval(timer);
-      searchStatus.textContent = 'ищем по смыслу…';
-      setTimeout(() => {
-        searchStatus.textContent = 'найдено 1 совпадение';
-        searchResult.classList.add('is-found');
-      }, 650);
-    }
-  }, 55);
-}
-new IntersectionObserver(([entry]) => { if (entry.isIntersecting) playSearch(); }, { threshold: .45 }).observe(searchSection);
+  setTimeout(() => {
+    search.classList.add('is-active');
+    const text = 'что решили про запуск?';
+    let i = 0;
+    const typing = setInterval(() => {
+      query.textContent = text.slice(0, ++i);
+      if (i === text.length) {
+        clearInterval(typing);
+        status.textContent = 'ищем по смыслу…';
+        setTimeout(() => { status.textContent = 'найдено 1 совпадение'; result.classList.add('is-found'); }, 650);
+      }
+    }, reduced ? 0 : 50);
+  }, reduced ? 0 : 450);
+}, { threshold: .45 }).observe(search);
+
+function onScroll() { root.classList.toggle('is-stuck', scrollY >= (mobile() ? 40 : 61) * scale() - 1); }
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', measure);
+document.fonts.ready.then(measure);
+measure();
+onScroll();
+requestAnimationFrame(animate);

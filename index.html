@@ -59,8 +59,8 @@
 <body>
   <div class="ticker" aria-hidden="true">
     <div class="ticker__track">
-      <span>✦быстрые заметки ✦ папки ✦ поиск ✦ синхронизация файлов ✦ тёмная тема ✦</span>
-      <span>✦быстрые заметки ✦ папки ✦ поиск ✦ синхронизация файлов ✦ тёмная тема ✦</span>
+      <span>✦пароли ✦ коды 2fa ✦ надиктовка ✦ поиск по смыслу ✦ расшифровка ✦ задачи ✦ история правок ✦</span>
+      <span>✦пароли ✦ коды 2fa ✦ надиктовка ✦ поиск по смыслу ✦ расшифровка ✦ задачи ✦ история правок ✦</span>
     </div>
   </div>
 
@@ -93,88 +93,62 @@
       </section>
 
       <section class="sheet" id="notes">
-        <div class="story">
-          <div class="stage">
-            <p class="lead js-lead">&lt;notes&gt; — единый центр работы, пишите Markdown, диктуйте голосом, ставьте задачи</p>
-            <div class="app js-app">
-              <h2 class="app__title">приложение для заметок, которое не мешает думать</h2>
-              <div class="carousel js-carousel">
-                <article class="card"><img src="assets/img/card-1.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>markdown‑файлы в вашей папке</h3><p>каждая заметка — обычный .md файл, выберите любую папку и приложение начнёт работать</p></div></article>
-                <article class="card"><img src="assets/img/card-2.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>задачи в календаре</h3><p>добавьте дату к задаче в заметке, она появится в apple calendar, никаких отдельных приложений для планирования</p></div></article>
-                <article class="card" id="search"><img src="assets/img/card-3.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>умный поиск</h3><p>найдите заметку даже если не помните точные слова, семантический поиск понимает контекст</p></div></article>
-                <article class="card" id="voice"><img src="assets/img/card-4.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>диктовка</h3><p>нажмите хоткей в любом приложении и речь превратится в текст, расшифровка с таймкодами и именами спикеров, работает локально</p></div></article>
-                <article class="card"><img src="assets/img/card-5.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>шаблоны</h3><p>создавайте шаблоны заметок для ускорения работы с заметками</p></div></article>
-                <article class="card"><img src="assets/img/card-6.webp" alt="" width="450" height="450" loading="lazy" decoding="async"><div class="card__fade"></div><div class="card__text"><h3>github</h3><p>папка хранит всю историю изменений, верните любую правку, github подключается по желанию</p></div></article>
-              </div>
-            </div>
-          </div>
-        </div>
+        <p class="lead js-lead">&lt;notes&gt; — единый центр работы, пишите Markdown,<br>диктуйте голосом, ставьте задачи</p>
       </section>
     </div>
 
-    <section class="feature voice-feature" id="voice-demo">
-      <div class="feature__copy reveal">
+    <section class="voice-feature" id="voice">
+      <div class="voice-rays" aria-hidden="true"></div>
+      <div class="feature__copy">
         <h2>один хоткей —<br>готовая заметка</h2>
         <p>whisper распознаёт прямо на компьютере, без интернета</p>
       </div>
-      <div class="voice-demo reveal" aria-label="Демонстрация голосовой заметки">
-        <kbd>⌥ Space</kbd>
-        <div class="voice-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="voice-note"><span>новая заметка.md</span><p class="js-voice-text"></p></div>
-      </div>
     </section>
 
-    <section class="feature search-feature" id="search-demo">
-      <div class="search-stage">
+    <section class="search-feature" id="search">
+      <div class="search-screen">
         <div class="search-label">поиск</div>
-        <div class="search-ui reveal">
+        <div class="search-ui">
           <div class="search-field"><span>⌕</span><b class="js-search-query"></b><i></i></div>
           <div class="search-status js-search-status">введите запрос</div>
-          <article class="search-result">
-            <small>план релиза.md</small>
-            <h3>созвон про запуск приложения</h3>
-            <p>подготовить сборку, проверить календарь и отправить changelog команде</p>
-          </article>
+          <article class="search-result"><small>план релиза.md</small><h3>созвон про запуск приложения</h3><p>подготовить сборку, проверить календарь и отправить changelog команде</p></article>
         </div>
-        <div class="feature__copy feature__copy--left reveal">
-          <h2>найдёт, даже если<br>забыли слова</h2>
-          <p>семантический поиск понимает смысл запроса, а не только точное совпадение</p>
-        </div>
+      </div>
+      <div class="search-copy">
+        <h2>найдёт, даже если забыли<br>слова</h2>
+        <p>один поиск по заметкам, задачам, событиям и словам в расшифровках. описываете своими словами, локальная модель понимает смысл (бета).</p>
       </div>
     </section>
 
-    <section class="feature tasks-feature" id="tasks">
-      <div class="feature__copy reveal"><h2>дела в календаре</h2><p>поставьте дату прямо в заметке — задача появится в календаре автоматически</p></div>
-      <div class="calendar reveal">
-        <div class="calendar__head"><b>ноябрь</b><span>пн&nbsp;&nbsp;вт&nbsp;&nbsp;ср&nbsp;&nbsp;чт&nbsp;&nbsp;пт&nbsp;&nbsp;сб&nbsp;&nbsp;вс</span></div>
-        <div class="calendar__grid" aria-hidden="true"></div>
-        <div class="calendar__task">✓ отправить релиз</div>
+    <section class="tasks-feature" id="tasks">
+      <div class="feature__copy"><h2>дела в календаре</h2><p>задача с датой видна в календаре приложения, а на mac ещё и в apple calendar рядом с вашими событиями, задачи из расшифровки уходят туда автоматически</p></div>
+      <div class="calendar">
+        <div class="calendar__head"><b>ноябрь</b><span>пн&nbsp;&nbsp;&nbsp;вт&nbsp;&nbsp;&nbsp;ср&nbsp;&nbsp;&nbsp;чт&nbsp;&nbsp;&nbsp;пт&nbsp;&nbsp;&nbsp;сб&nbsp;&nbsp;&nbsp;вс</span></div>
+        <div class="calendar__grid" aria-hidden="true"></div><div class="calendar__task">✓ отправить релиз</div>
       </div>
     </section>
 
-    <section class="feature vault-feature" id="security">
-      <div class="vault-seal reveal"><span>сейф&nbsp;•&nbsp;сейф&nbsp;•&nbsp;сейф&nbsp;•&nbsp;</span><b>⌁</b></div>
-      <div class="feature__copy reveal"><h2>пароли между делом</h2><p>пароли и коды 2FA лежат рядом с заметками, но остаются зашифрованными</p></div>
+    <section class="vault-feature" id="security">
+      <edinstvo-glass class="vault-glass" frost="0.24" refraction="0.65" dispersion="0.22" thickness="18" depth="22" stroke-thickness="2" tint="#e54d33" transparency="0.42" reflection="0.65"><span>сейф</span></edinstvo-glass>
+      <div class="feature__copy"><h2>пароли живут рядом с мыслями</h2><p>пароли, коды 2fa и секреты прямо в приложении. без подписки, без мастер-пароля, без чужого облака.</p></div>
       <div class="vault-cards">
-        <article><b>touch id и windows hello</b><p>палец или лицо вместо мастер-пароля</p></article>
+        <article><b>touch id и windows hello</b><p>палец или лицо вместо мастер-пароля, ключ придумывает сам компьютер</p></article>
         <article><b>только здесь</b><p>сейф не уходит на github</p></article>
-        <article><b>60 секунд</b><p>пароль сам стирается из буфера</p></article>
-        <article><b>сон = замок</b><p>экран погас — сейф уже закрыт</p></article>
+        <article><b>60 секунд</b><p>скопированный пароль сам стирается из буфера</p></article>
+        <article><b>сон = замок</b><p>компьютер уснул или экран заблокирован, сейф уже закрыт</p></article>
       </div>
     </section>
 
-    <section class="feature mcp-feature" id="mcp">
-      <div class="feature__copy reveal"><h2>ваша память для Claude Code и Cursor</h2><p>локальный MCP-сервер даёт агентам доступ только к тем заметкам, которые выбрали вы</p></div>
-      <div class="agent-board reveal">
-        <div class="agent-note n1">план релиза</div><div class="agent-note n2">идеи продукта</div><div class="agent-note n3">задачи команды</div><div class="agent-note n4">исследование</div>
-        <i class="cursor c1">↖<span>Claude</span></i><i class="cursor c2">↖<span>Cursor</span></i><i class="cursor c3">↖<span>Codex</span></i><i class="cursor c4">↖<span>Вы</span></i>
-      </div>
-      <div class="mini-features"><p><b>без сети</b><span>сервер работает локально</span></p><p><b>вы решаете, что видно</b><span>закрытые папки скрыты</span></p><p><b>всё в журнале</b><span>каждое действие записано</span></p><p><b>готовые скиллы</b><span>промты уже внутри</span></p></div>
+    <section class="mcp-feature" id="mcp">
+      <div class="feature__copy"><h2>ваша память для <span>◻ claude</span>, <span>▣ codex</span> и <span>◧ cursor</span></h2><p>в &lt;notes&gt; встроен MCP-сервер. одна команда, и нейросеть читает заметки и задачи, ищет и сама создаёт</p></div>
+      <div class="agent-cursors" aria-hidden="true"><i>↖<b>Claude</b></i><i>↖<b>Codex</b></i><i>↖<b>Cursor</b></i><i>↖<b>Вы</b></i></div>
+      <div class="mini-features"><p><b>без сети</b><span>сервер работает локально, без посредников</span></p><p><b>вы решаете, что видно</b><span>закрытые папки скрыты, режим «только чтение» убирает запись</span></p><p><b>всё в журнале</b><span>какой инструмент и файл открыт, без текста заметок</span></p><p><b>готовые скиллы</b><span>промты и скиллы для работы с заметками уже внутри</span></p></div>
     </section>
 
-    <section class="feature history-feature">
-      <div class="feature__copy reveal"><h2>ни одна правка<br>не пропадёт</h2><p>история изменений хранится через github — вернитесь к любой версии</p></div>
-      <div class="timeline reveal"><i></i><b></b><b></b><b></b><b></b><b></b><span>черновик</span><span>план релиза</span><span>правки</span><span>новый раздел</span><span>сейчас</span></div>
+    <section class="history-feature">
+      <div class="feature__copy"><h2>ни одна правка<br>не пропадёт</h2><p>каждая правка сама сохраняется в git, история выглядит как граф, любую версию можно вернуть графически</p></div>
+      <div class="timeline"><i></i><b></b><b></b><b></b><b></b><b></b><span>пн 09:12<br>черновик</span><span>пн 18:40<br>план релиза</span><span>вт 11:05<br>правки после созвона</span><span>ср 14:20<br>новый раздел</span><span>сейчас<br>план приложения</span></div>
+      <p class="history-note">хотите копию на github? приватный репозиторий создаётся сам, история уходит раз в день.</p>
     </section>
 
     <section class="extras">
@@ -182,10 +156,10 @@
       <div><span>вкладки</span><span>PDF, Word и Pages внутри</span><span>apple calendar на mac</span><span>день, неделя, месяц</span><span>цветные папки</span><span>тёмная тема</span><span>⌘Z везде</span><span>автоматизация заметок</span><span>импорт из apple passwords</span><span>русский, english, srpski</span></div>
     </section>
 
-    <section class="docs reveal" id="faq"><div><h2>документация</h2><p>первая настройка, сейф, MCP, шаблоны</p></div><a href="#">открыть сайт →</a></section>
+    <section class="docs" id="faq"><div><h2>документация</h2><p>первая настройка, сейф, MCP, шаблоны</p></div><edinstvo-glass class="glass-button" frost="0.16" refraction="0.48" thickness="12" depth="18" tint="#ffffff" transparency="0.12" foreground="#000"><a href="#">открыть сайт</a></edinstvo-glass></section>
 
     <section class="bottom">
-      <div class="cta"><p>всё, что важно — в одной папке</p><h2>&lt;notes&gt;</h2><div><a href="#">скачать для macOS</a><a href="https://github.com/">github</a></div></div>
+      <div class="cta"><h2>&lt;notes&gt;</h2><p>ваши мысли, ваши файлы, ваш компьютер</p><div><edinstvo-glass class="glass-button" frost="0.14" refraction="0.5" tint="#ffffff" transparency="0.18" foreground="#000"><a href="#">скачать для macOS</a></edinstvo-glass><edinstvo-glass class="glass-button" frost="0.14" refraction="0.5" tint="#ffffff" transparency="0.18" foreground="#000"><a href="#">скачать для Windows</a></edinstvo-glass></div><small>бесплатно　|　open source　|　macOS 27+　|　Windows</small></div>
       <footer class="footer">
         <div class="footer__sheet"></div>
         <a class="footer__logo" href="#">&lt;notes&gt;</a>
@@ -204,6 +178,7 @@
     </section>
   </main>
 
+  <script type="module" src="assets/glass/define.js"></script>
   <script src="i18n.js"></script>
   <script src="main.js"></script>
 </body>
