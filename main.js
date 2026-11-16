@@ -19,7 +19,7 @@ function fillTicker() {
   const item = document.createElement('span');
   item.textContent = t.ticker;
   track.append(item);
-  const copies = Math.max(4, Math.ceil(root.clientWidth / item.offsetWidth) * 2 + 2);
+  const copies = Math.max(4, Math.ceil(root.clientWidth / Math.max(1, item.offsetWidth)) * 2 + 2);
   for (let i = 1; i < copies; i++) track.append(item.cloneNode(true));
   track.style.animationDuration = `${copies * 5}s`;
 }
@@ -65,6 +65,7 @@ function measure() {
   loop.setAttribute('d', `M${x + radius} ${y}H${x2 - radius}A${radius} ${radius} 0 0 1 ${x2} ${y + radius}V${y2 - radius}A${radius} ${radius} 0 0 1 ${x2 - radius} ${y2}H${x + radius}A${radius} ${radius} 0 0 1 ${x} ${y2 - radius}V${y + radius}A${radius} ${radius} 0 0 1 ${x + radius} ${y}Z`);
   pathLength = loop.getTotalLength();
   fillTicker();
+  queueScroll();
 }
 
 let visibleHero = true;
@@ -81,40 +82,73 @@ function animate(now) {
   requestAnimationFrame(animate);
 }
 
-const calendar = $('.calendar');
 const mcp = $('.mcp-feature');
-const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-  entry.target.classList.toggle('is-visible', entry.isIntersecting);
-}), { threshold: .35 });
-[calendar, mcp].forEach(el => observer.observe(el));
+const voice = $('.voice-feature');
+const reveal = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('is-visible');
+    reveal.unobserve(entry.target);
+  });
+}, { rootMargin: '0px 0px -40% 0px' });
+[voice, $('.mini-features')].forEach(el => reveal.observe(el));
 
 const search = $('.search-feature');
 const query = $('.js-search-query');
 const status = $('.js-search-status');
 const result = $('.search-result');
-let searchPlayed = false;
-new IntersectionObserver(([entry]) => {
-  if (!entry.isIntersecting || searchPlayed) return;
-  searchPlayed = true;
-  setTimeout(() => {
-    search.classList.add('is-active');
-    const text = 'что решили про запуск?';
-    let i = 0;
-    const typing = setInterval(() => {
-      query.textContent = text.slice(0, ++i);
-      if (i === text.length) {
-        clearInterval(typing);
-        status.textContent = 'ищем по смыслу…';
-        setTimeout(() => { status.textContent = 'найдено 1 совпадение'; result.classList.add('is-found'); }, 650);
-      }
-    }, reduced ? 0 : 50);
-  }, reduced ? 0 : 450);
-}, { threshold: .45 }).observe(search);
+const searchIntro = $('.search-intro');
+const sheet = $('.sheet');
+const vaultIntro = $('.vault-intro');
+const nav = $('.nav');
+const navSections = [
+  [$('.hero'), 'hero'], [sheet, 'light'], [voice, 'dark'],
+  [searchIntro, 'light'], [$('.search-copy'), 'orange'],
+  [$('.vault-feature'), 'orange'], [mcp, 'dark'],
+  [$('.history-feature'), 'light'], [$('.extras'), 'dark'],
+  [$('.docs'), 'dark'], [$('.bottom'), 'dark'], [$('.footer'), 'light'],
+];
+const clamp = value => Math.min(1, Math.max(0, value));
+const progress = element => {
+  const rect = element.getBoundingClientRect();
+  return clamp(-rect.top / Math.max(1, rect.height - innerHeight));
+};
 
-function onScroll() { root.classList.toggle('is-stuck', scrollY >= (mobile() ? 40 : 61) * scale() - 1); }
-addEventListener('scroll', onScroll, { passive: true });
+let scrollFrame = 0;
+function onScroll() {
+  scrollFrame = 0;
+  root.classList.toggle('is-stuck', scrollY >= (mobile() ? 40 : 61) * scale() - 1);
+  const whiteProgress = progress(sheet);
+  const searchProgress = reduced ? 1 : progress(searchIntro);
+  const vaultProgress = progress(vaultIntro);
+  sheet.style.setProperty('--shade', reduced ? 0 : clamp((whiteProgress - .48) / .52));
+  vaultIntro.style.setProperty('--vanish', reduced ? 0 : clamp((vaultProgress - .58) / .35));
+  vaultIntro.classList.toggle('is-orbiting', vaultIntro.getBoundingClientRect().bottom > 0 &&
+    vaultIntro.getBoundingClientRect().top < innerHeight && vaultProgress < .93);
+
+  const text = 'что решили про запуск?';
+  const length = Math.floor(clamp((searchProgress - .28) / .35) * text.length);
+  search.classList.toggle('is-active', searchProgress >= .25);
+  query.textContent = text.slice(0, length);
+  status.textContent = searchProgress >= .78 ? 'найдено 1 совпадение' :
+    length === text.length ? 'ищем по смыслу…' : 'введите запрос';
+  result.classList.toggle('is-found', searchProgress >= .78);
+
+  const navLine = nav.querySelector('.nav__links').getBoundingClientRect().top;
+  let tone = 'hero';
+  for (const [section, color] of navSections) {
+    if (section.getBoundingClientRect().top <= navLine) tone = color;
+  }
+  nav.dataset.tone = tone === 'light' && whiteProgress > .8 &&
+    sheet.getBoundingClientRect().bottom > navLine ? 'dark' : tone;
+}
+
+function queueScroll() {
+  if (!scrollFrame) scrollFrame = requestAnimationFrame(onScroll);
+}
+
+addEventListener('scroll', queueScroll, { passive: true });
 addEventListener('resize', measure);
 document.fonts.ready.then(measure);
 measure();
-onScroll();
 requestAnimationFrame(animate);

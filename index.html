@@ -92,8 +92,8 @@
         <span class="hero__os">macOS 27+</span>
       </section>
 
-      <section class="sheet" id="notes">
-        <p class="lead js-lead">&lt;notes&gt; — единый центр работы, пишите Markdown,<br>диктуйте голосом, ставьте задачи</p>
+      <section class="sheet scroll-scene" id="notes">
+        <div class="scene-frame"><p class="lead js-lead">&lt;notes&gt; — единый центр работы, пишите Markdown,<br>диктуйте голосом, ставьте задачи</p></div>
       </section>
     </div>
 
@@ -106,13 +106,15 @@
     </section>
 
     <section class="search-feature" id="search">
-      <div class="search-screen">
+      <div class="search-intro scroll-scene">
+      <div class="search-screen scene-frame">
         <div class="search-label">поиск</div>
         <div class="search-ui">
           <div class="search-field"><span>⌕</span><b class="js-search-query"></b><i></i></div>
           <div class="search-status js-search-status">введите запрос</div>
-          <article class="search-result"><small>план релиза.md</small><h3>созвон про запуск приложения</h3><p>подготовить сборку, проверить календарь и отправить changelog команде</p></article>
+          <article class="search-result"><small>план релиза.md</small><h3>созвон про запуск приложения</h3><p>подготовить сборку и отправить список изменений команде</p></article>
         </div>
+      </div>
       </div>
       <div class="search-copy">
         <h2>найдёт, даже если забыли<br>слова</h2>
@@ -120,35 +122,39 @@
       </div>
     </section>
 
-    <section class="tasks-feature" id="tasks">
-      <div class="feature__copy"><h2>дела в календаре</h2><p>задача с датой видна в календаре приложения, а на mac ещё и в apple calendar рядом с вашими событиями, задачи из расшифровки уходят туда автоматически</p></div>
-      <div class="calendar">
-        <div class="calendar__head"><b>ноябрь</b><span>пн&nbsp;&nbsp;&nbsp;вт&nbsp;&nbsp;&nbsp;ср&nbsp;&nbsp;&nbsp;чт&nbsp;&nbsp;&nbsp;пт&nbsp;&nbsp;&nbsp;сб&nbsp;&nbsp;&nbsp;вс</span></div>
-        <div class="calendar__grid" aria-hidden="true"></div><div class="calendar__task">✓ отправить релиз</div>
-      </div>
-    </section>
-
     <section class="vault-feature" id="security">
-      <edinstvo-glass class="vault-glass" frost="0.24" refraction="0.65" dispersion="0.22" thickness="18" depth="22" stroke-thickness="2" tint="#e54d33" transparency="0.42" reflection="0.65"><span>сейф</span></edinstvo-glass>
+      <div class="vault-intro scroll-scene">
+        <div class="scene-frame">
+          <edinstvo-glass class="vault-glass" frost="0.24" refraction="0.65" dispersion="0.22" thickness="18" depth="22" stroke-thickness="2" tint="#e54d33" transparency="0.42" reflection="0.65"><span class="sr-only">сейф</span></edinstvo-glass>
+          <svg class="vault-ring" viewBox="0 0 500 500" aria-hidden="true">
+            <path id="vault-orbit" d="M250 36a214 214 0 1 1 0 428a214 214 0 1 1 0-428Z" fill="none"/>
+            <text><textPath href="#vault-orbit">сейф</textPath></text>
+          </svg>
+        </div>
+      </div>
       <div class="feature__copy"><h2>пароли живут рядом с мыслями</h2><p>пароли, коды 2fa и секреты прямо в приложении. без подписки, без мастер-пароля, без чужого облака.</p></div>
       <div class="vault-cards">
         <article><b>touch id и windows hello</b><p>палец или лицо вместо мастер-пароля, ключ придумывает сам компьютер</p></article>
-        <article><b>только здесь</b><p>сейф не уходит на github</p></article>
+        <article><b>только здесь</b><p>сейф хранится на твоём компьютере</p></article>
         <article><b>60 секунд</b><p>скопированный пароль сам стирается из буфера</p></article>
         <article><b>сон = замок</b><p>компьютер уснул или экран заблокирован, сейф уже закрыт</p></article>
       </div>
     </section>
 
     <section class="mcp-feature" id="mcp">
-      <div class="feature__copy"><h2>ваша память для <span>◻ claude</span>, <span>▣ codex</span> и <span>◧ cursor</span></h2><p>в &lt;notes&gt; встроен MCP-сервер. одна команда, и нейросеть читает заметки и задачи, ищет и сама создаёт</p></div>
-      <div class="agent-cursors" aria-hidden="true"><i>↖<b>Claude</b></i><i>↖<b>Codex</b></i><i>↖<b>Cursor</b></i><i>↖<b>Вы</b></i></div>
-      <div class="mini-features"><p><b>без сети</b><span>сервер работает локально, без посредников</span></p><p><b>вы решаете, что видно</b><span>закрытые папки скрыты, режим «только чтение» убирает запись</span></p><p><b>всё в журнале</b><span>какой инструмент и файл открыт, без текста заметок</span></p><p><b>готовые скиллы</b><span>промты и скиллы для работы с заметками уже внутри</span></p></div>
+      <div class="feature__copy"><h2>твоя память для <span><img src="assets/img/claude.png" alt="" width="32" height="32"> claude</span>, <span><img src="assets/img/codex.png" alt="" width="42" height="42"> codex</span> и <span><img src="assets/img/cursor.png" alt="" width="32" height="32"> cursor</span></h2><p>в &lt;notes&gt; встроен MCP-сервер. одна команда, и нейросеть читает заметки и задачи, ищет и сама создаёт</p></div>
+      <svg class="sr-only" aria-hidden="true"><symbol id="agent-pointer" viewBox="0 0 24 28"><path d="M2 2l19 15-9 1-4 8z" fill="currentColor" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></symbol></svg>
+      <div class="mini-features">
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Claude</i><b>без сети</b><span>сервер работает локально, без посредников</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Codex</i><b>ты решаешь, что видно</b><span>закрытые папки скрыты, режим «только чтение» убирает запись</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Cursor</i><b>всё в журнале</b><span>какой инструмент и файл открыт, без текста заметок</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Ты</i><b>готовые скиллы</b><span>промты и скиллы для работы с заметками уже внутри</span></p>
+      </div>
     </section>
 
     <section class="history-feature">
-      <div class="feature__copy"><h2>ни одна правка<br>не пропадёт</h2><p>каждая правка сама сохраняется в git, история выглядит как граф, любую версию можно вернуть графически</p></div>
+      <div class="feature__copy"><h2>ни одна правка<br>не пропадёт</h2><p>правки сохраняются автоматически. любую версию можно восстановить из истории</p></div>
       <div class="timeline"><i></i><b></b><b></b><b></b><b></b><b></b><span>пн 09:12<br>черновик</span><span>пн 18:40<br>план релиза</span><span>вт 11:05<br>правки после созвона</span><span>ср 14:20<br>новый раздел</span><span>сейчас<br>план приложения</span></div>
-      <p class="history-note">хотите копию на github? приватный репозиторий создаётся сам, история уходит раз в день.</p>
     </section>
 
     <section class="extras">
