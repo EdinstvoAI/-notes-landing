@@ -90,8 +90,9 @@ const reveal = new IntersectionObserver(entries => {
     entry.target.classList.add('is-visible');
     reveal.unobserve(entry.target);
   });
-}, { rootMargin: '0px 0px -40% 0px' });
+}, { threshold: .25 });
 [voice, $('.mini-features')].forEach(el => reveal.observe(el));
+if (!reduced) $('.mini-features').classList.add('will-reveal');
 
 const search = $('.search-feature');
 const query = $('.js-search-query');
@@ -111,7 +112,8 @@ const navSections = [
 const clamp = value => Math.min(1, Math.max(0, value));
 const progress = element => {
   const rect = element.getBoundingClientRect();
-  return clamp(-rect.top / Math.max(1, rect.height - innerHeight));
+  const frameHeight = element.firstElementChild.offsetHeight;
+  return clamp(-rect.top / Math.max(1, rect.height - frameHeight));
 };
 
 let scrollFrame = 0;
@@ -121,7 +123,11 @@ function onScroll() {
   const whiteProgress = progress(sheet);
   const searchProgress = reduced ? 1 : progress(searchIntro);
   const vaultProgress = progress(vaultIntro);
-  sheet.style.setProperty('--shade', reduced ? 0 : clamp((whiteProgress - .48) / .52));
+  const shade = reduced ? 0 : clamp((whiteProgress - .64) / .36);
+  sheet.style.setProperty('--shade', shade);
+  sheet.style.setProperty('--lead-in', reduced ? 1 : clamp((whiteProgress - .12) / .28));
+  sheet.classList.toggle('is-flat', whiteProgress > .02);
+  vaultIntro.style.setProperty('--vault-in', reduced ? 1 : clamp((vaultProgress - .12) / .26));
   vaultIntro.style.setProperty('--vanish', reduced ? 0 : clamp((vaultProgress - .58) / .35));
   vaultIntro.classList.toggle('is-orbiting', vaultIntro.getBoundingClientRect().bottom > 0 &&
     vaultIntro.getBoundingClientRect().top < innerHeight && vaultProgress < .93);
@@ -139,7 +145,7 @@ function onScroll() {
   for (const [section, color] of navSections) {
     if (section.getBoundingClientRect().top <= navLine) tone = color;
   }
-  nav.dataset.tone = tone === 'light' && whiteProgress > .8 &&
+  nav.dataset.tone = tone === 'light' && shade > .55 &&
     sheet.getBoundingClientRect().bottom > navLine ? 'dark' : tone;
 }
 
