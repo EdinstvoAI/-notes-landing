@@ -46,7 +46,8 @@ function applyLang(next) {
     c.querySelector('h3').textContent = h;
     c.querySelector('p').textContent = p;
   });
-  $('.wip').textContent = t.wip;
+  const wip = $('.wip');
+  if (wip) wip.textContent = t.wip;
   $$('.footer__col--map > *').forEach((el, i) => (el.textContent = t.map[i]));
   $$('.footer__col--res > *').forEach((el, i) => (el.textContent = t.res[i]));
   $$('.footer__langs a').forEach(a => a.classList.toggle('is-active', a.dataset.lang === lang));
@@ -230,3 +231,50 @@ fit();
 applyLang(lang);
 requestAnimationFrame(frame);
 document.fonts.ready.then(() => { fillTicker(); measurePath(); });
+
+// lightweight feature demos: start only when their section reaches the viewport
+const revealed = $$('.reveal');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => entry.target.classList.toggle('is-visible', entry.isIntersecting));
+}, { threshold: .22 });
+revealed.forEach(el => revealObserver.observe(el));
+
+const voiceText = $('.js-voice-text');
+const voiceSection = $('.voice-feature');
+const voicePhrase = 'Записать итоги созвона и добавить задачу на пятницу.';
+let voiceTimer;
+new IntersectionObserver(([entry]) => {
+  clearInterval(voiceTimer);
+  if (!entry.isIntersecting) return;
+  let i = 0;
+  voiceText.textContent = '';
+  voiceTimer = setInterval(() => {
+    voiceText.textContent = voicePhrase.slice(0, ++i);
+    if (i >= voicePhrase.length) clearInterval(voiceTimer);
+  }, 38);
+}, { threshold: .55 }).observe(voiceSection);
+
+const searchSection = $('.search-feature');
+const searchQuery = $('.js-search-query');
+const searchStatus = $('.js-search-status');
+const searchResult = $('.search-result');
+let searchPlayed = false;
+function playSearch() {
+  if (searchPlayed) return;
+  searchPlayed = true;
+  searchSection.classList.add('is-active');
+  const query = 'что решили про запуск?';
+  let i = 0;
+  const timer = setInterval(() => {
+    searchQuery.textContent = query.slice(0, ++i);
+    if (i >= query.length) {
+      clearInterval(timer);
+      searchStatus.textContent = 'ищем по смыслу…';
+      setTimeout(() => {
+        searchStatus.textContent = 'найдено 1 совпадение';
+        searchResult.classList.add('is-found');
+      }, 650);
+    }
+  }, 55);
+}
+new IntersectionObserver(([entry]) => { if (entry.isIntersecting) playSearch(); }, { threshold: .45 }).observe(searchSection);

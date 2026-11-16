@@ -88,6 +88,8 @@
           <span class="js-place">место для</span>
           <span class="hero__word"><span class="js-word">мыслей</span></span>
         </h1>
+        <a class="hero__download" href="#">Скачать</a>
+        <span class="hero__os">macOS 27+</span>
       </section>
 
       <section class="sheet" id="notes">
@@ -110,8 +112,80 @@
       </section>
     </div>
 
+    <section class="feature voice-feature" id="voice-demo">
+      <div class="feature__copy reveal">
+        <h2>один хоткей —<br>готовая заметка</h2>
+        <p>whisper распознаёт прямо на компьютере, без интернета</p>
+      </div>
+      <div class="voice-demo reveal" aria-label="Демонстрация голосовой заметки">
+        <kbd>⌥ Space</kbd>
+        <div class="voice-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="voice-note"><span>новая заметка.md</span><p class="js-voice-text"></p></div>
+      </div>
+    </section>
+
+    <section class="feature search-feature" id="search-demo">
+      <div class="search-stage">
+        <div class="search-label">поиск</div>
+        <div class="search-ui reveal">
+          <div class="search-field"><span>⌕</span><b class="js-search-query"></b><i></i></div>
+          <div class="search-status js-search-status">введите запрос</div>
+          <article class="search-result">
+            <small>план релиза.md</small>
+            <h3>созвон про запуск приложения</h3>
+            <p>подготовить сборку, проверить календарь и отправить changelog команде</p>
+          </article>
+        </div>
+        <div class="feature__copy feature__copy--left reveal">
+          <h2>найдёт, даже если<br>забыли слова</h2>
+          <p>семантический поиск понимает смысл запроса, а не только точное совпадение</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature tasks-feature" id="tasks">
+      <div class="feature__copy reveal"><h2>дела в календаре</h2><p>поставьте дату прямо в заметке — задача появится в календаре автоматически</p></div>
+      <div class="calendar reveal">
+        <div class="calendar__head"><b>ноябрь</b><span>пн&nbsp;&nbsp;вт&nbsp;&nbsp;ср&nbsp;&nbsp;чт&nbsp;&nbsp;пт&nbsp;&nbsp;сб&nbsp;&nbsp;вс</span></div>
+        <div class="calendar__grid" aria-hidden="true"></div>
+        <div class="calendar__task">✓ отправить релиз</div>
+      </div>
+    </section>
+
+    <section class="feature vault-feature" id="security">
+      <div class="vault-seal reveal"><span>сейф&nbsp;•&nbsp;сейф&nbsp;•&nbsp;сейф&nbsp;•&nbsp;</span><b>⌁</b></div>
+      <div class="feature__copy reveal"><h2>пароли между делом</h2><p>пароли и коды 2FA лежат рядом с заметками, но остаются зашифрованными</p></div>
+      <div class="vault-cards">
+        <article><b>touch id и windows hello</b><p>палец или лицо вместо мастер-пароля</p></article>
+        <article><b>только здесь</b><p>сейф не уходит на github</p></article>
+        <article><b>60 секунд</b><p>пароль сам стирается из буфера</p></article>
+        <article><b>сон = замок</b><p>экран погас — сейф уже закрыт</p></article>
+      </div>
+    </section>
+
+    <section class="feature mcp-feature" id="mcp">
+      <div class="feature__copy reveal"><h2>ваша память для Claude Code и Cursor</h2><p>локальный MCP-сервер даёт агентам доступ только к тем заметкам, которые выбрали вы</p></div>
+      <div class="agent-board reveal">
+        <div class="agent-note n1">план релиза</div><div class="agent-note n2">идеи продукта</div><div class="agent-note n3">задачи команды</div><div class="agent-note n4">исследование</div>
+        <i class="cursor c1">↖<span>Claude</span></i><i class="cursor c2">↖<span>Cursor</span></i><i class="cursor c3">↖<span>Codex</span></i><i class="cursor c4">↖<span>Вы</span></i>
+      </div>
+      <div class="mini-features"><p><b>без сети</b><span>сервер работает локально</span></p><p><b>вы решаете, что видно</b><span>закрытые папки скрыты</span></p><p><b>всё в журнале</b><span>каждое действие записано</span></p><p><b>готовые скиллы</b><span>промты уже внутри</span></p></div>
+    </section>
+
+    <section class="feature history-feature">
+      <div class="feature__copy reveal"><h2>ни одна правка<br>не пропадёт</h2><p>история изменений хранится через github — вернитесь к любой версии</p></div>
+      <div class="timeline reveal"><i></i><b></b><b></b><b></b><b></b><b></b><span>черновик</span><span>план релиза</span><span>правки</span><span>новый раздел</span><span>сейчас</span></div>
+    </section>
+
+    <section class="extras">
+      <p>и ещё</p>
+      <div><span>вкладки</span><span>PDF, Word и Pages внутри</span><span>apple calendar на mac</span><span>день, неделя, месяц</span><span>цветные папки</span><span>тёмная тема</span><span>⌘Z везде</span><span>автоматизация заметок</span><span>импорт из apple passwords</span><span>русский, english, srpski</span></div>
+    </section>
+
+    <section class="docs reveal" id="faq"><div><h2>документация</h2><p>первая настройка, сейф, MCP, шаблоны</p></div><a href="#">открыть сайт →</a></section>
+
     <section class="bottom">
-      <p class="wip">сайт в разработке</p>
+      <div class="cta"><p>всё, что важно — в одной папке</p><h2>&lt;notes&gt;</h2><div><a href="#">скачать для macOS</a><a href="https://github.com/">github</a></div></div>
       <footer class="footer">
         <div class="footer__sheet"></div>
         <a class="footer__logo" href="#">&lt;notes&gt;</a>
