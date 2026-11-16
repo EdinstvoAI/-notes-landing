@@ -27,7 +27,13 @@ function fillTicker() {
 $$('.nav__links a').forEach((a, i) => { if (t.nav[i]) a.textContent = t.nav[i]; });
 $$('.js-path').forEach(p => { p.textContent = t.path; });
 $('.js-place').textContent = t.place;
-$('.js-lead').textContent = t.lead;
+const lead = $('.js-lead');
+const leadWords = t.lead.split(/\s+/).map(text => {
+  const word = document.createElement('span');
+  word.textContent = text;
+  return word;
+});
+lead.replaceChildren(...leadWords.flatMap((word, index) => index ? [' ', word] : [word]));
 $$('.footer__col--map > *').forEach((el, i) => { if (t.map[i]) el.textContent = t.map[i]; });
 $$('.footer__col--res > *').forEach((el, i) => { if (t.res[i]) el.textContent = t.res[i]; });
 $$('.footer__langs a').forEach(a => a.classList.toggle('is-active', a.dataset.lang === lang));
@@ -123,10 +129,18 @@ function onScroll() {
   const whiteProgress = progress(sheet);
   const searchProgress = reduced ? 1 : progress(searchIntro);
   const vaultProgress = progress(vaultIntro);
-  const shade = reduced ? 0 : clamp((whiteProgress - .64) / .36);
-  sheet.style.setProperty('--shade', shade);
-  sheet.style.setProperty('--lead-in', reduced ? 1 : clamp((whiteProgress - .12) / .28));
-  sheet.classList.toggle('is-flat', whiteProgress > .02);
+  if (!reduced) {
+    const radius = (mobile() ? 34 : 50) * scale();
+    for (const scene of [sheet, searchIntro]) {
+      const remaining = radius + scene.getBoundingClientRect().top;
+      scene.style.setProperty('--top-radius', `${Math.min(radius, Math.max(0, remaining))}px`);
+    }
+  }
+  sheet.style.setProperty('--lead-in', reduced ? 1 : clamp((whiteProgress - .04) / .16));
+  const inkProgress = reduced ? 1 : clamp((whiteProgress - .22) / .68);
+  leadWords.forEach((word, index) => {
+    word.classList.toggle('is-read', inkProgress * leadWords.length >= index + 1);
+  });
   vaultIntro.style.setProperty('--vault-in', reduced ? 1 : clamp((vaultProgress - .12) / .26));
   vaultIntro.style.setProperty('--vanish', reduced ? 0 : clamp((vaultProgress - .58) / .35));
   vaultIntro.classList.toggle('is-orbiting', vaultIntro.getBoundingClientRect().bottom > 0 &&
@@ -145,8 +159,7 @@ function onScroll() {
   for (const [section, color] of navSections) {
     if (section.getBoundingClientRect().top <= navLine) tone = color;
   }
-  nav.dataset.tone = tone === 'light' && shade > .55 &&
-    sheet.getBoundingClientRect().bottom > navLine ? 'dark' : tone;
+  nav.dataset.tone = tone;
 }
 
 function queueScroll() {

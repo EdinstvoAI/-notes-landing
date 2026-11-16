@@ -41,7 +41,7 @@ a { color: inherit; text-decoration: none; }
 .ticker__track span { padding-right: 100rem; }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
-.page { position: relative; z-index: 1; padding-top: 61rem; }
+.page { position: relative; z-index: 1; padding-top: 61rem; background: #000; background-clip: content-box; }
 
 /* nav */
 .nav {
@@ -78,11 +78,6 @@ a { color: inherit; text-decoration: none; }
 
 /* hero */
 .top { position: relative; }
-/* dark backing so the sheet's rounded bottom corners sit on the bottom gradient */
-.top::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 60rem;
-  background: #1b0906; z-index: 1;
-}
 .hero {
   position: sticky; top: 0;
   height: 712rem;
@@ -180,7 +175,7 @@ a { color: inherit; text-decoration: none; }
 /* bottom */
 .bottom {
   position: relative; height: 2000rem; overflow: hidden;
-  background: radial-gradient(circle at 50% 48%, #9e2e1f 0, #3a110c 38%, #000 75%);
+  background: linear-gradient(to bottom, #000 5%, #35100a 35%, #e54d33 100%);
 }
 .wip {
   position: absolute; left: 0; right: 0; top: 323rem;
@@ -280,32 +275,24 @@ a { color: inherit; text-decoration: none; }
 }
 .sheet.scroll-scene {
   display: block;
-  background: linear-gradient(transparent 100rem, #060606 100rem);
+  background: transparent;
   padding: 0;
 }
 .sheet .scene-frame {
-  border-radius: 50rem 50rem 0 0;
-  isolation: isolate;
+  border-radius: var(--top-radius, var(--seam)) var(--top-radius, var(--seam)) var(--seam) var(--seam);
   background: #fff;
   padding-inline: 24rem;
-  transition: border-radius .25s ease;
-}
-.sheet.is-flat .scene-frame { border-radius: 0; }
-.sheet .scene-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: #060606;
-  opacity: var(--shade, 0);
 }
 .sheet .lead {
   max-width: 100%;
-  opacity: calc(var(--lead-in, 1) * (1 - var(--shade, 0)));
+  opacity: var(--lead-in, 1);
   transform: translateY(calc((1 - var(--lead-in, 1)) * 22rem));
 }
-.voice-feature { margin-top: 0; }
+.sheet .lead span { color: #8a8a8a; transition: color .18s ease; }
+.sheet .lead .is-read { color: #000; }
+
+.page { --seam: 50rem; }
+.voice-feature { margin-top: -116rem; height: 986rem; }
 .voice-rays { animation-play-state: paused; }
 .voice-feature.is-visible .voice-rays { animation-play-state: running; }
 .voice-feature.is-visible h2 { animation: hotkey-reveal .65s ease-out both; }
@@ -315,12 +302,30 @@ a { color: inherit; text-decoration: none; }
   to { transform: none; clip-path: inset(0); }
 }
 
-.search-feature { height: auto; padding-bottom: 160rem; }
-.search-screen { height: 100svh; }
+.search-feature {
+  position: relative;
+  isolation: isolate;
+  z-index: 2;
+  height: auto;
+  margin-top: calc(-1 * var(--seam));
+  padding-bottom: 160rem;
+  background: none;
+}
+.search-feature::before {
+  content: "";
+  position: absolute;
+  inset: var(--seam) 0 0;
+  z-index: -1;
+  background: #e54d33 url("assets/img/hero-new.webp") center bottom / 100% auto no-repeat;
+}
+.search-screen {
+  height: 100svh;
+  border-radius: var(--top-radius, var(--seam)) var(--top-radius, var(--seam)) var(--seam) var(--seam);
+}
 .search-label { transition: opacity .24s; }
 .search-ui { max-width: calc(100% - 40rem); }
 .search-copy { padding-top: 145rem; }
-.vault-feature { height: auto; margin-top: 0; padding-top: 0; }
+.vault-feature { height: auto; margin-top: calc(-1 * var(--seam)); padding-top: 0; }
 .vault-intro { height: 180svh; }
 .vault-intro .scene-frame {
   opacity: calc(var(--vault-in, 1) * (1 - var(--vanish, 0)));
@@ -339,6 +344,7 @@ a { color: inherit; text-decoration: none; }
 .vault-intro.is-orbiting .vault-ring { animation-play-state: running; }
 @keyframes vault-orbit { to { rotate: 1turn; } }
 .vault-feature .feature__copy { margin-top: 0; max-width: 100%; }
+.mcp-feature { margin-top: calc(-1 * var(--seam)); padding-top: 250rem; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .mcp-feature .feature__copy h2 { line-height: 1.35; }
@@ -388,7 +394,10 @@ a { color: inherit; text-decoration: none; }
   to { opacity: 0; }
 }
 @media (max-width: 767px) {
-  .sheet .scene-frame { border-radius: 34rem 34rem 0 0; }
+  .page { --seam: 34rem; }
+  .voice-feature { margin-top: -70rem; height: 684rem; }
+  .search-feature::before { background-size: auto 100%; }
+  .mcp-feature { padding-top: 164rem; }
   .mcp-feature .feature__copy { max-width: 100%; }
   .mcp-feature .feature__copy p { max-width: 100%; }
   .vault-ring { width: min(236rem, 60vw, 56svh); }
