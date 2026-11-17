@@ -30,7 +30,7 @@ a { color: inherit; text-decoration: none; }
 /* ticker */
 .ticker {
   position: fixed; inset: 0 0 auto; height: 138rem; z-index: 0;
-  background: #e54d33; color: #fff; overflow: hidden;
+  background: #fff; color: #e54d33; overflow: hidden;
 }
 .ticker__track {
   position: absolute; left: -12rem; top: 20rem;
@@ -47,14 +47,13 @@ a { color: inherit; text-decoration: none; }
 @property --nav-tint {
   syntax: "<color>";
   inherits: true;
-  initial-value: #200c08;
+  initial-value: #e54d33;
 }
 .nav {
   --nav-h: 176rem;
   position: sticky; top: 0; z-index: 10;
   height: var(--nav-h); margin-bottom: calc(-1 * var(--nav-h));
   border-radius: 50rem 50rem 0 0;
-  background: url("assets/img/nav.webp") 0 0 / 100% 100%;
 }
 .nav::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
@@ -76,13 +75,13 @@ a { color: inherit; text-decoration: none; }
 }
 .nav__links {
   position: absolute; left: 818rem; top: 51rem;
-  display: flex; gap: 30rem; font-size: 13rem;
+  display: flex; gap: 30rem; font-size: 13rem; letter-spacing: -.07em;
 }
 .nav__links a, .footer a { transition: opacity .2s; }
 .nav__links a:hover { opacity: .5; }
 
 /* hero */
-.top { position: relative; }
+.top { position: relative; background: linear-gradient(#fff 50rem, transparent 50rem); }
 .hero {
   position: sticky; top: 0;
   height: 712rem;
@@ -97,7 +96,7 @@ a { color: inherit; text-decoration: none; }
 .hero__title {
   position: absolute; left: 0; right: 0; top: 192rem;
   display: flex; flex-direction: column; align-items: center;
-  font-weight: 400; font-size: 40rem; line-height: 48rem; white-space: nowrap;
+  font-weight: 400; font-size: 40rem; line-height: 48rem; letter-spacing: -.07em; white-space: nowrap;
 }
 .hero__word { position: relative; display: block; width: 100%; height: 48rem; }
 .hero__word span {
@@ -119,8 +118,9 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
   color: #000;
   font-size: 13rem;
+  letter-spacing: -.07em;
 }
-.hero__os { position:absolute;left:0;right:0;top:559rem;text-align:center;font-size:13rem; }
+.hero__os { position:absolute;left:0;right:0;top:559rem;text-align:center;font-size:14rem;letter-spacing:-.07em;opacity:.4; }
 
 /* white sheet */
 .sheet {
@@ -259,12 +259,23 @@ a { color: inherit; text-decoration: none; }
 .hero { color: #fff; }
 .hero__path text { fill: #fff; }
 .nav {
-  --nav-tint: #200c08;
+  --nav-tint: #e54d33;
   color: #fff;
   background: linear-gradient(color-mix(in srgb, var(--nav-tint) 70%, transparent), transparent 90%);
   pointer-events: none;
   transition: --nav-tint .36s ease-in-out, color .36s ease-in-out, border-radius .5s;
 }
+.nav__art {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: url("assets/img/nav-figma.webp") center / 100% 100% no-repeat;
+  opacity: 0;
+  transition: opacity .36s ease-in-out;
+}
+.nav:not([data-tone]) .nav__art,
+.nav[data-tone="hero"] .nav__art { opacity: 1; }
 .nav a { pointer-events: auto; white-space: nowrap; }
 .nav[data-tone="light"] { --nav-tint: #fff; color: #111; }
 .nav[data-tone="dark"] { --nav-tint: #0e0e0e; }
@@ -412,7 +423,7 @@ a { color: inherit; text-decoration: none; }
   .vault-ring { width: min(236rem, 60vw, 56svh); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav { transition: none; }
+  .nav, .nav__art { transition: none; }
   .scroll-scene { height: auto; }
   .scene-frame { position: relative; }
   .voice-feature.is-visible .voice-rays,

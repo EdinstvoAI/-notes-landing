@@ -66,10 +66,18 @@ function measure() {
   root.style.fontSize = `${r}px`;
   const w = hero.clientWidth / r;
   const h = hero.clientHeight / r;
-  const [x, y, x2, y2, radius] = mobile() ? [14, 104, w - 14, h - 24, 34] : [55, 176, 1865, 306, 62];
+  const [x, y, x2, y2, radius] = mobile() ? [14, 104, w - 14, h - 24, 34] : [50, 175, 1870, 306, 62];
   svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
   loop.setAttribute('d', `M${x + radius} ${y}H${x2 - radius}A${radius} ${radius} 0 0 1 ${x2} ${y + radius}V${y2 - radius}A${radius} ${radius} 0 0 1 ${x2 - radius} ${y2}H${x + radius}A${radius} ${radius} 0 0 1 ${x} ${y2 - radius}V${y + radius}A${radius} ${radius} 0 0 1 ${x + radius} ${y}Z`);
-  pathLength = loop.getTotalLength();
+  const length = loop.getTotalLength();
+  if (pathLength === 1 || reduced) {
+    pathOffset = Math.max(0, (w - paths[0].getComputedTextLength()) / 2 - x - radius);
+    paths[0].setAttribute('startOffset', pathOffset);
+    paths[1].setAttribute('startOffset', pathOffset - length);
+  } else {
+    pathOffset = pathOffset / pathLength * length;
+  }
+  pathLength = length;
   fillTicker();
   queueScroll();
 }
