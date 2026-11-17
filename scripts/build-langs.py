@@ -1,11 +1,14 @@
 """Generate /en/ and /sr/ pages from index.html (the RU source).
 
 Link previews (Telegram, VK, social) don't run JS, so each language needs
-its own static <head>. Body text is translated at runtime by i18n.js.
+its own static <head> and translated body. Animation copy lives in i18n.js.
 Run after any change to index.html:  python3 scripts/build-langs.py
 """
 import re
+from html import unescape
 from pathlib import Path
+
+from page_copy import TRANSLATIONS
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = 'https://notes.makark.ru'
@@ -37,6 +40,22 @@ def sub(pattern, repl, html):
     return out
 
 
+def translate_body(body, code):
+    def translate(match):
+        lines = match.group(1)
+        text = unescape(lines.strip())
+        translations = TRANSLATIONS.get(text)
+        if translations:
+            start = len(lines) - len(lines.lstrip())
+            end = len(lines.rstrip())
+            return '>' + lines[:start] + esc(translations[code]) + lines[end:] + '<'
+        if re.search(r'[А-Яа-яЁё]', text) and text not in {'Русский', 'Српски'}:
+            raise SystemExit(f'Missing translation for {text!r}')
+        return match.group(0)
+
+    return re.sub(r'>([^<>]+)<', translate, body)
+
+
 source = (ROOT / 'index.html').read_text(encoding='utf-8')
 
 for code, t in LANGS.items():
@@ -56,6 +75,8 @@ for code, t in LANGS.items():
                   f'<meta property="og:locale" content="{t["locale"]}">\n  '
                   f'<meta property="og:locale:alternate" content="{others[0]}">\n  '
                   f'<meta property="og:locale:alternate" content="{others[1]}">', html, count=1)
+    head, body = html.split('<body>', 1)
+    html = head + '<body>' + translate_body(body, code)
     # assets live one level up
     html = re.sub(r'(src|href)="(assets/|styles\.css|i18n\.js|main\.js)', r'\1="../\2', html)
     out = ROOT / code / 'index.html'

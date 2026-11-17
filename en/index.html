@@ -59,8 +59,8 @@
 <body>
   <div class="ticker" aria-hidden="true">
     <div class="ticker__track">
-      <span>✦пароли ✦ коды 2fa ✦ надиктовка ✦ поиск по смыслу ✦ расшифровка ✦ задачи ✦ история правок ✦</span>
-      <span>✦пароли ✦ коды 2fa ✦ надиктовка ✦ поиск по смыслу ✦ расшифровка ✦ задачи ✦ история правок ✦</span>
+      <span>✦passwords ✦ 2FA codes ✦ dictation ✦ semantic search ✦ transcripts ✦ tasks ✦ edit history ✦</span>
+      <span>✦passwords ✦ 2FA codes ✦ dictation ✦ semantic search ✦ transcripts ✦ tasks ✦ edit history ✦</span>
     </div>
   </div>
 
@@ -69,12 +69,13 @@
       <span class="nav__art" aria-hidden="true"></span>
       <a class="nav__logo" href="#">&lt;notes&gt;</a>
       <nav class="nav__links">
-        <a href="#notes">Заметки</a>
-        <a href="#search">Поиск</a>
-        <a href="#voice">Голос</a>
-        <a href="#security">Безопасность</a>
-        <a href="#faq">FAQ</a>
-        <a href="https://github.com/">Github</a>
+        <a href="#notes">Notes</a>
+        <a href="#voice">Dictation</a>
+        <a href="#search">Search</a>
+        <a href="#security">Vault</a>
+        <a href="#mcp">Integrations</a>
+        <a href="#history">History</a>
+        <a href="#faq">Docs</a>
       </nav>
     </header>
 
@@ -82,104 +83,104 @@
       <section class="hero">
         <svg class="hero__path" viewBox="0 0 1920 712" aria-hidden="true">
           <path id="loop" d="M117 176 H1803 A62 62 0 0 1 1865 238 V244 A62 62 0 0 1 1803 306 H117 A62 62 0 0 1 55 244 V238 A62 62 0 0 1 117 176 Z" fill="none"/>
-          <text><textPath href="#loop" class="js-path">все что в голове - в одном месте</textPath></text>
-          <text><textPath href="#loop" class="js-path">все что в голове - в одном месте</textPath></text>
+          <text><textPath href="#loop" class="js-path">everything on your mind in one place</textPath></text>
+          <text><textPath href="#loop" class="js-path">everything on your mind in one place</textPath></text>
         </svg>
         <h1 class="hero__title">
-          <span class="js-place">место для</span>
-          <span class="hero__word"><span class="js-word">мыслей</span></span>
+          <span class="js-place">a place for</span>
+          <span class="hero__word"><span class="js-word">thoughts</span></span>
         </h1>
-        <a class="hero__download" href="https://github.com/EdinstvoAI/-notes-/releases/download/multi-v1.1.3-beta/notes_1.1.3-beta_aarch64.dmg">Скачать</a>
+        <a class="hero__download" href="https://github.com/EdinstvoAI/-notes-/releases">Download</a>
         <span class="hero__os">macOS 27+</span>
       </section>
 
       <section class="sheet scroll-scene" id="notes">
-        <div class="scene-frame"><p class="lead js-lead">&lt;notes&gt; — единый центр работы, пишите Markdown,<br>диктуйте голосом, ставьте задачи</p></div>
+        <div class="scene-frame"><p class="lead js-lead">&lt;notes&gt; — one place to work. Write in Markdown,<br>dictate notes and set tasks</p></div>
       </section>
     </div>
 
     <section class="voice-feature" id="voice">
       <div class="voice-rays" aria-hidden="true"></div>
       <div class="feature__copy">
-        <h2>один хоткей —<br>готовая заметка</h2>
-        <p>whisper распознаёт прямо на компьютере, без интернета</p>
+        <h2>one shortcut,<br>and your note is ready</h2>
+        <p>Whisper transcribes on your computer, even offline</p>
       </div>
     </section>
 
     <section class="search-feature" id="search">
       <div class="search-intro scroll-scene">
       <div class="search-screen scene-frame">
-        <div class="search-label">поиск</div>
+        <div class="search-label">search</div>
         <div class="search-ui">
           <div class="search-field"><span>⌕</span><b class="js-search-query"></b><i></i></div>
-          <div class="search-status js-search-status">введите запрос</div>
-          <article class="search-result"><small>план релиза.md</small><h3>созвон про запуск приложения</h3><p>подготовить сборку и отправить список изменений команде</p></article>
+          <div class="search-status js-search-status">enter a query</div>
+          <article class="search-result"><small>release plan.md</small><h3>call about the app launch</h3><p>prepare a build and send the changelog to the team</p></article>
         </div>
       </div>
       </div>
       <div class="search-copy">
-        <h2>найдёт, даже если забыли<br>слова</h2>
-        <p>один поиск по заметкам, задачам, событиям и словам в расшифровках. описываете своими словами, локальная модель понимает смысл (бета).</p>
+        <h2>find it even if you forget<br>the exact words</h2>
+        <p>Search notes, tasks, events and transcripts together. A local model understands what you mean when you search in your own words (beta).</p>
       </div>
     </section>
 
     <section class="vault-feature" id="security">
       <div class="vault-intro scroll-scene">
         <div class="scene-frame">
-          <edinstvo-glass class="vault-glass" frost="0.24" refraction="0.65" dispersion="0.22" thickness="18" depth="22" stroke-thickness="2" tint="#e54d33" transparency="0.42" reflection="0.65"><span class="sr-only">сейф</span></edinstvo-glass>
+          <edinstvo-glass class="vault-glass" frost="0.24" refraction="0.65" dispersion="0.22" thickness="18" depth="22" stroke-thickness="2" tint="#e54d33" transparency="0.42" reflection="0.65"><span class="sr-only">vault</span></edinstvo-glass>
           <svg class="vault-ring" viewBox="0 0 500 500" aria-hidden="true">
             <path id="vault-orbit" d="M250 36a214 214 0 1 1 0 428a214 214 0 1 1 0-428Z" fill="none"/>
-            <text><textPath href="#vault-orbit">сейф</textPath></text>
+            <text><textPath href="#vault-orbit">vault</textPath></text>
           </svg>
         </div>
       </div>
-      <div class="feature__copy"><h2>пароли живут рядом с мыслями</h2><p>пароли, коды 2fa и секреты прямо в приложении. без подписки, без мастер-пароля, без чужого облака.</p></div>
+      <div class="feature__copy"><h2>keep passwords beside your notes</h2><p>Passwords, 2FA codes and secrets in the app. No subscription, master password or third-party cloud.</p></div>
       <div class="vault-cards">
-        <article><b>touch id и windows hello</b><p>палец или лицо вместо мастер-пароля, ключ придумывает сам компьютер</p></article>
-        <article><b>только здесь</b><p>сейф хранится на твоём компьютере</p></article>
-        <article><b>60 секунд</b><p>скопированный пароль сам стирается из буфера</p></article>
-        <article><b>сон = замок</b><p>компьютер уснул или экран заблокирован, сейф уже закрыт</p></article>
+        <article><b>Touch ID and Windows Hello</b><p>Use your fingerprint or face. Your computer generates the key.</p></article>
+        <article><b>stays local</b><p>The vault stays on your computer.</p></article>
+        <article><b>60 seconds</b><p>Copied passwords are cleared from the clipboard automatically.</p></article>
+        <article><b>locks on sleep</b><p>The vault locks when your computer sleeps or your screen locks.</p></article>
       </div>
     </section>
 
     <section class="mcp-feature" id="mcp">
-      <div class="feature__copy"><h2>твоя память для <span><img src="../assets/img/claude.png" alt="" width="32" height="32"> claude</span>, <span><img src="../assets/img/codex.png" alt="" width="42" height="42"> codex</span> и <span><img src="../assets/img/cursor.png" alt="" width="32" height="32"> cursor</span></h2><p>в &lt;notes&gt; встроен MCP-сервер. одна команда, и нейросеть читает заметки и задачи, ищет и сама создаёт</p></div>
+      <div class="feature__copy"><h2>your memory for <span><img src="../assets/img/claude.png" alt="" width="32" height="32"> claude</span>, <span><img src="../assets/img/codex.png" alt="" width="42" height="42"> codex</span> and <span><img src="../assets/img/cursor.png" alt="" width="32" height="32"> cursor</span></h2><p>&lt;notes&gt; has a built-in MCP server. With one command, your assistant can read, search and create notes and tasks.</p></div>
       <svg class="sr-only" aria-hidden="true"><symbol id="agent-pointer" viewBox="0 0 24 28"><path d="M2 2l19 15-9 1-4 8z" fill="currentColor" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></symbol></svg>
       <div class="mini-features">
-        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Claude</i><b>без сети</b><span>сервер работает локально, без посредников</span></p>
-        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Codex</i><b>ты решаешь, что видно</b><span>закрытые папки скрыты, режим «только чтение» убирает запись</span></p>
-        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Cursor</i><b>всё в журнале</b><span>какой инструмент и файл открыт, без текста заметок</span></p>
-        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Ты</i><b>готовые скиллы</b><span>промты и скиллы для работы с заметками уже внутри</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Claude</i><b>works offline</b><span>The server runs locally, without intermediaries.</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Codex</i><b>you control access</b><span>Private folders stay hidden. Read-only mode prevents edits.</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>Cursor</i><b>activity log</b><span>See which tool and file were opened. Note contents stay private.</span></p>
+        <p><i class="agent-pointer" aria-hidden="true"><svg><use href="#agent-pointer"/></svg>You</i><b>built-in skills</b><span>Prompts and skills for working with notes are included.</span></p>
       </div>
     </section>
 
-    <section class="history-feature">
-      <div class="feature__copy"><h2>ни одна правка<br>не пропадёт</h2><p>правки сохраняются автоматически. любую версию можно восстановить из истории</p></div>
-      <div class="timeline"><i></i><b></b><b></b><b></b><b></b><b></b><span>пн 09:12<br>черновик</span><span>пн 18:40<br>план релиза</span><span>вт 11:05<br>правки после созвона</span><span>ср 14:20<br>новый раздел</span><span>сейчас<br>план приложения</span></div>
+    <section class="history-feature" id="history">
+      <div class="feature__copy"><h2>no edit<br>gets lost</h2><p>Edits are saved automatically. Restore any version from history.</p></div>
+      <div class="timeline"><i></i><b></b><b></b><b></b><b></b><b></b><span>Mon 09:12<br>draft</span><span>Mon 18:40<br>release plan</span><span>Tue 11:05<br>edits after the call</span><span>Wed 14:20<br>new section</span><span>now<br>app plan</span></div>
     </section>
 
     <section class="extras">
-      <p>и ещё</p>
-      <div><span>вкладки</span><span>PDF, Word и Pages внутри</span><span>apple calendar на mac</span><span>день, неделя, месяц</span><span>цветные папки</span><span>тёмная тема</span><span>⌘Z везде</span><span>автоматизация заметок</span><span>импорт из apple passwords</span><span>русский, english, srpski</span></div>
+      <p>and more</p>
+      <div><span>tabs</span><span>PDF, Word and Pages previews</span><span>Apple Calendar on Mac</span><span>day, week and month views</span><span>colored folders</span><span>dark mode</span><span>⌘Z everywhere</span><span>note automation</span><span>import from Apple Passwords</span><span>Russian, English, Serbian</span></div>
     </section>
 
-    <section class="docs" id="faq"><div><h2>документация</h2><p>первая настройка, сейф, MCP, шаблоны</p></div><edinstvo-glass class="glass-button" frost="0.16" refraction="0.48" thickness="12" depth="18" tint="#ffffff" transparency="0.12" foreground="#000"><a href="#">открыть сайт</a></edinstvo-glass></section>
+    <section class="docs" id="faq"><div><h2>documentation</h2><p>getting started, vault, MCP, templates</p></div><edinstvo-glass class="glass-button" frost="0.16" refraction="0.48" thickness="12" depth="18" tint="#ffffff" transparency="0.12" foreground="#000"><a href="https://github.com/EdinstvoAI/-notes-/tree/HEAD/docs">Read the docs</a></edinstvo-glass></section>
 
     <section class="bottom">
-      <div class="cta"><h2>&lt;notes&gt;</h2><p>ваши мысли, ваши файлы, ваш компьютер</p><div><edinstvo-glass class="glass-button" frost="0.14" refraction="0.5" tint="#ffffff" transparency="0.18" foreground="#000"><a href="https://github.com/EdinstvoAI/-notes-/releases/download/multi-v1.1.3-beta/notes_1.1.3-beta_aarch64.dmg">скачать для macOS</a></edinstvo-glass><edinstvo-glass class="glass-button" frost="0.14" refraction="0.5" tint="#ffffff" transparency="0.18" foreground="#000"><a href="https://github.com/EdinstvoAI/-notes-/releases/download/multi-v1.1.3-beta/notes_1.1.3-beta_x64-setup.exe">скачать для Windows</a></edinstvo-glass></div><small>бесплатно　|　open source　|　macOS 27+　|　Windows</small></div>
+      <div class="cta"><h2>&lt;notes&gt;</h2><p>your thoughts, your files, your computer</p><div><edinstvo-glass class="glass-button" frost="0.14" refraction="0.5" tint="#ffffff" transparency="0.18" foreground="#000"><a href="https://github.com/EdinstvoAI/-notes-/releases/download/multi-v1.1.3-beta/notes_1.1.3-beta_aarch64.dmg">download for macOS</a></edinstvo-glass><edinstvo-glass class="glass-button" frost="0.14" refraction="0.5" tint="#ffffff" transparency="0.18" foreground="#000"><a href="https://github.com/EdinstvoAI/-notes-/releases/download/multi-v1.1.3-beta/notes_1.1.3-beta_x64-setup.exe">download for Windows</a></edinstvo-glass></div><small>free　|　open source　|　macOS 27+　|　Windows</small></div>
       <footer class="footer">
         <div class="footer__sheet"></div>
         <a class="footer__logo" href="#">&lt;notes&gt;</a>
         <div class="footer__col footer__col--map">
-          <h4>карта сайта</h4>
-          <a href="#notes">заметки</a><a href="#search">поиск</a><a href="#voice">голос</a><a href="#security">безопасность</a>
+          <h4>on this page</h4>
+          <a href="#notes">Notes</a><a href="#voice">Dictation</a><a href="#search">Search</a><a href="#security">Vault</a><a href="#mcp">Integrations</a><a href="#history">History</a>
         </div>
         <div class="footer__col footer__col--res">
-          <h4>ресурсы</h4>
-          <a href="#">документация</a><a href="#">первая настройка</a><a href="#faq">FAQ</a><a href="https://github.com/">github</a><a href="#">changelog</a>
+          <h4>resources</h4>
+          <a href="#faq">Docs</a><a href="https://github.com/EdinstvoAI/-notes-/blob/HEAD/docs/SETUP.md">Getting started</a><a href="https://github.com/EdinstvoAI/-notes-/releases">Releases</a><a href="https://github.com/EdinstvoAI/-notes-">GitHub</a><a href="https://github.com/EdinstvoAI/-notes-/issues">Report an issue</a>
         </div>
         <div class="footer__langs">
-          <a data-lang="ru" href="/">🇷🇺рус</a><a data-lang="en" href="/en/">🇺🇸eng</a><a data-lang="sr" href="/sr/">🇷🇸српски</a>
+          <a data-lang="ru" lang="ru" hreflang="ru" href="/">Русский</a><a data-lang="en" lang="en" hreflang="en" href="/en/">English</a><a data-lang="sr" lang="sr" hreflang="sr" href="/sr/">Српски</a>
         </div>
       </footer>
     </section>

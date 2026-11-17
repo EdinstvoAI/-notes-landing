@@ -195,8 +195,8 @@ a { color: inherit; text-decoration: none; }
 .footer__logo { left: 198.36rem; top: 706.34rem; font: 50rem/normal "Martian Grotesk xWd", sans-serif; letter-spacing: -0.05em; white-space: nowrap; }
 .footer__col { width: 160rem; display: flex; flex-direction: column; white-space: nowrap; }
 .footer__col h4 { font-weight: 400; font-size: 14rem; color: #1d1d1f; margin-bottom: 30rem; }
-.footer__col a { font-size: 13rem; opacity: .3; }
-.footer__col a:hover, .footer__langs a:hover { opacity: 1; }
+.footer__col a { font-size: 13rem; opacity: .68; }
+.footer__col a:hover, .footer__col a:focus-visible, .footer__langs a:hover { opacity: 1; }
 .footer__col--map { left: 154rem; top: 855.1rem; gap: 0; }
 .footer__col--map a + a { margin-top: 15rem; }
 .footer__col--res { left: 384.36rem; top: 846.48rem; letter-spacing: 0; }

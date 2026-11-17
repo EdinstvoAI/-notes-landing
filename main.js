@@ -24,7 +24,6 @@ function fillTicker() {
   track.style.animationDuration = `${copies * 5}s`;
 }
 
-$$('.nav__links a').forEach((a, i) => { if (t.nav[i]) a.textContent = t.nav[i]; });
 $$('.js-path').forEach(p => { p.textContent = t.path; });
 $('.js-place').textContent = t.place;
 const lead = $('.js-lead');
@@ -34,9 +33,11 @@ const leadWords = t.lead.split(/\s+/).map(text => {
   return word;
 });
 lead.replaceChildren(...leadWords.flatMap((word, index) => index ? [' ', word] : [word]));
-$$('.footer__col--map > *').forEach((el, i) => { if (t.map[i]) el.textContent = t.map[i]; });
-$$('.footer__col--res > *').forEach((el, i) => { if (t.res[i]) el.textContent = t.res[i]; });
-$$('.footer__langs a').forEach(a => a.classList.toggle('is-active', a.dataset.lang === lang));
+$$('.footer__langs a').forEach(a => {
+  const active = a.dataset.lang === lang;
+  a.classList.toggle('is-active', active);
+  if (active) a.setAttribute('aria-current', 'page');
+});
 
 const wordBox = $('.hero__word');
 let word = $('.js-word');
@@ -156,12 +157,11 @@ function onScroll() {
   vaultIntro.classList.toggle('is-orbiting', vaultIntro.getBoundingClientRect().bottom > 0 &&
     vaultIntro.getBoundingClientRect().top < innerHeight && vaultProgress < .93);
 
-  const text = 'что решили про запуск?';
+  const { text, idle, running, found } = t.search;
   const length = Math.floor(clamp((searchProgress - .28) / .35) * text.length);
   search.classList.toggle('is-active', searchProgress >= .25);
   query.textContent = text.slice(0, length);
-  status.textContent = searchProgress >= .78 ? 'найдено 1 совпадение' :
-    length === text.length ? 'ищем по смыслу…' : 'введите запрос';
+  status.textContent = searchProgress >= .78 ? found : length === text.length ? running : idle;
   result.classList.toggle('is-found', searchProgress >= .78);
 
   const navLinks = nav.querySelector('.nav__links').getBoundingClientRect();
