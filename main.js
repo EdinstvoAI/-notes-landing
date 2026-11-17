@@ -132,8 +132,10 @@ function onScroll() {
   if (!reduced) {
     const radius = (mobile() ? 34 : 50) * scale();
     for (const scene of [sheet, searchIntro]) {
-      const remaining = radius + scene.getBoundingClientRect().top;
-      scene.style.setProperty('--top-radius', `${Math.min(radius, Math.max(0, remaining))}px`);
+      const bounds = scene.getBoundingClientRect();
+      const exit = scene.firstElementChild.getBoundingClientRect().height - bounds.bottom;
+      scene.style.setProperty('--top-radius', `${radius * clamp(1 + bounds.top / radius)}px`);
+      scene.style.setProperty('--bottom-radius', `${radius * clamp(exit / radius)}px`);
     }
   }
   sheet.style.setProperty('--lead-in', reduced ? 1 : clamp((whiteProgress - .04) / .16));
@@ -154,7 +156,8 @@ function onScroll() {
     length === text.length ? 'ищем по смыслу…' : 'введите запрос';
   result.classList.toggle('is-found', searchProgress >= .78);
 
-  const navLine = nav.querySelector('.nav__links').getBoundingClientRect().top;
+  const navLinks = nav.querySelector('.nav__links').getBoundingClientRect();
+  const navLine = navLinks.top + navLinks.height / 2;
   let tone = 'hero';
   for (const [section, color] of navSections) {
     if (section.getBoundingClientRect().top <= navLine) tone = color;
