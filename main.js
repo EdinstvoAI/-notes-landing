@@ -67,7 +67,9 @@ function measure() {
   root.style.fontSize = `${r}px`;
   const w = hero.clientWidth / r;
   const h = hero.clientHeight / r;
-  const [x, y, x2, y2, radius] = mobile() ? [14, 104, w - 14, h - 24, 34] : [50, 175, 1870, 306, 62];
+  const navLinks = $('.nav__links');
+  const mobilePathTop = (navLinks.offsetTop + navLinks.offsetHeight + 18) / r;
+  const [x, y, x2, y2, radius] = mobile() ? [14, mobilePathTop, w - 14, h - 24, 34] : [50, 175, 1870, 306, 62];
   svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
   loop.setAttribute('d', `M${x + radius} ${y}H${x2 - radius}A${radius} ${radius} 0 0 1 ${x2} ${y + radius}V${y2 - radius}A${radius} ${radius} 0 0 1 ${x2 - radius} ${y2}H${x + radius}A${radius} ${radius} 0 0 1 ${x} ${y2 - radius}V${y + radius}A${radius} ${radius} 0 0 1 ${x + radius} ${y}Z`);
   const length = loop.getTotalLength();

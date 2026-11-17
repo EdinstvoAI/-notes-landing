@@ -418,12 +418,48 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 767px) {
   .page { --seam: 34rem; }
+  .nav__links { row-gap: 0; }
+  .nav__links a { display: grid; align-items: center; min-height: 28px; }
+  .hero { height: clamp(420px, 600rem, 640px); }
+  .hero__title { top: 42%; font-size: clamp(23px, 30rem, 38px); }
+  .hero__download { top: 65%; min-height: 44px; }
+  .hero__os { top: 78%; }
+  .scroll-scene { height: calc(100dvh + 65svh); }
+  .vault-intro { height: calc(100dvh + 80svh); }
+  .scene-frame, .search-screen { height: 100dvh; }
   .voice-feature { margin-top: -70rem; height: 684rem; }
   .search-feature::before { background-size: auto 100%; }
-  .mcp-feature { padding-top: 164rem; }
+  .search-field { height: auto; min-height: 54rem; padding-block: 8px; gap: 10px; }
+  .search-field b { min-width: 0; overflow-wrap: anywhere; }
+  .search-field i { flex: none; }
+  .search-status, .search-result p, .search-result small { font-size: max(12px, 12rem); }
+  .search-copy { width: auto; margin-inline: 24rem; }
+  .feature__copy p, .search-copy p { font-size: max(13px, 13rem); }
+  .vault-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vault-cards article { height: auto; min-height: 170rem; padding: 55rem 16rem 20rem; overflow-wrap: anywhere; }
+  .vault-cards b, .mini-features b { font-size: max(13px, 13rem); }
+  .vault-cards p, .mini-features span { font-size: max(12px, 11rem); }
+  .mcp-feature { height: auto; padding: 164rem 20rem 90rem; }
   .mcp-feature .feature__copy { max-width: 100%; }
   .mcp-feature .feature__copy p { max-width: 100%; }
   .vault-ring { width: min(236rem, 60vw, 56svh); }
+
+  .docs { height: auto; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .docs p { font-size: max(13px, 12rem); }
+  .glass-button a { display: grid; place-items: center; min-height: 44px; font-size: max(12px, 11rem); }
+  .bottom { height: auto; }
+  .cta { position: relative; top: auto; height: auto; padding: 110rem 16px 100rem; text-align: center; }
+  .cta div { flex-wrap: wrap; justify-content: center; }
+  .footer {
+    position: relative; top: auto; height: auto; margin: 0;
+    padding: 45rem max(16px, 26rem) 48rem; gap: 24px 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); transform: none;
+    background: #fff; border-radius: 34rem 34rem 0 0;
+  }
+  .footer__sheet { display: none; }
+  .footer__col { white-space: normal; }
+  .footer__col a, .footer__langs { font-size: max(12px, 13rem); }
+  .footer__langs { flex-wrap: wrap; gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .nav, .nav__art { transition: none; }
