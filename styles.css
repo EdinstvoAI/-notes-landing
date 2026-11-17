@@ -13,6 +13,9 @@
 
 /* 1rem = 1px of the 1920px-wide Figma frame */
 html { font-size: calc(100vw / 1920); overflow-x: clip; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: #e54d33;
